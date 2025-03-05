@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\HTML\" />
     <Folder Include="wwwroot\CSS\" />
     <Folder Include="wwwroot\Javascript\" />

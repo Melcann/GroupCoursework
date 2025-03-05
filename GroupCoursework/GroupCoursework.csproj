@@ -7,14 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <Compile Remove="wwwroot\CSS\**" />
+    <Compile Remove="wwwroot\HTML\**" />
+    <Compile Remove="wwwroot\images\**" />
+    <Compile Remove="wwwroot\Javascript\**" />
+    <Content Remove="wwwroot\CSS\**" />
+    <Content Remove="wwwroot\HTML\**" />
+    <Content Remove="wwwroot\images\**" />
+    <Content Remove="wwwroot\Javascript\**" />
+    <EmbeddedResource Remove="wwwroot\CSS\**" />
+    <EmbeddedResource Remove="wwwroot\HTML\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
+    <EmbeddedResource Remove="wwwroot\Javascript\**" />
+    <None Remove="wwwroot\CSS\**" />
+    <None Remove="wwwroot\HTML\**" />
+    <None Remove="wwwroot\images\**" />
+    <None Remove="wwwroot\Javascript\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\HTML\" />
-    <Folder Include="wwwroot\CSS\" />
-    <Folder Include="wwwroot\Javascript\" />
-    <Folder Include="wwwroot\images\" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
 </Project>

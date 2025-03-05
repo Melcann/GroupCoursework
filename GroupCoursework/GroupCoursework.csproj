@@ -14,6 +14,7 @@
     <Folder Include="wwwroot\HTML\" />
     <Folder Include="wwwroot\CSS\" />
     <Folder Include="wwwroot\Javascript\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

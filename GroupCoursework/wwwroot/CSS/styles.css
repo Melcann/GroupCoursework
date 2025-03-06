@@ -1,0 +1,676 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 25px;
+}
+
+.logo {
+  font-weight: bolder;
+  font-size: 40px;
+  color: #0A9396;
+}
+
+.page-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.page-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  transition: color 0.3s ease-in-out;
+}
+
+.page-links a:hover {
+  color: #0ED8DB;
+}
+
+/* Login Section */
+.login-section {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+
+.login-section form {
+  display: flex;
+  gap: 10px;
+}
+
+.login-section input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.login-section button {
+  background-color: #0a9396;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.login-section button:hover {
+  background-color: #0ED8DB;
+  transform: scale(1.1);
+}
+
+/*index photo front page*/
+.beach {
+  width: 75%;
+  height: auto;
+  border-radius: 15px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 45px;
+  white-space: nowrap;
+}
+
+/* form container */
+.form-container {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  position: relative;
+  top: -50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+.form-container select,
+.form-container input,
+.form-container button {
+  margin-bottom: 0;
+  padding: 10px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.form-container button {
+  background-color: #0a9396;
+  color: white;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.form-container button:hover {
+  background-color: #0ED8DB;
+  transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+  background-color: #0A9396;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+footer h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+footer p {
+  font-size: 16px;
+  color: #f1f1f1;
+}
+
+footer a {
+  color: #f1f1f1;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #0ED8DB;
+}
+
+footer div {
+  margin-top: 20px;
+}
+
+footer h4 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+footer .contact-info p,
+footer .legal-info p {
+  font-size: 14px;
+  color: #d1d1d1;
+}
+
+footer .legal-info a {
+  margin-right: 10px;
+}
+
+/* Popular Destinations Section */
+.popular-destinations {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.popular-destinations h2 {
+  font-size: 28px;
+  color: #000000;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.destination-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 0 20px;
+}
+
+.destination-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: calc(20% - 16px);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: scale(1.05);
+}
+
+.destination-image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px 15px 0 0;
+}
+
+.destination-name {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px;
+  color: #333;
+  background-color: #f1f1f1;
+  margin: 0;
+}
+
+/* Testimonials Section */
+.testimonials {
+  padding: 40px 0;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.testimonials h3 {
+  font-size: 28px;
+  color: #0A9396;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.testimonial-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  max-width: 350px;
+  display: inline-block;
+  text-align: center;
+  transition: transform 0.3s ease;
+  font-style: italic;
+}
+
+.testimonial-card:hover {
+  transform: scale(1.05);
+}
+
+.testimonial-card p {
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0;
+}
+
+.customer-name {
+  font-weight: bold;
+  color: #0A9396;
+}
+
+
+/* Legal and Support Section */
+.legal-support-section {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 900px;
+}
+
+.legal-support-section h2 {
+  font-size: 32px;
+  color: #0A9396;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.legal-support-section h3 {
+  font-size: 24px;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.legal-support-section p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.legal-support-section a {
+  color: #0A9396;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.legal-support-section a:hover {
+  color: #0ED8DB;
+}
+
+.legal-support-section ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.legal-support-section ul li {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.legal-support-section ul li strong {
+  color: #0A9396;
+}
+
+/* Contact Support Section */
+.contact-support {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.contact-support h3 {
+  font-size: 24px;
+  color: #0A9396;
+  margin-bottom: 20px;
+}
+
+.contact-support ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-support ul li {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.contact-support a {
+  color: #0A9396;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.contact-support a:hover {
+  color: #0ED8DB;
+}
+
+/* Refund and Cancellation Policy Section */
+.refund-cancellation {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.refund-cancellation h3 {
+  font-size: 24px;
+  color: #0A9396;
+  margin-bottom: 20px;
+}
+
+.refund-cancellation p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Cookie Policy Section */
+.cookie-policy {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.cookie-policy h3 {
+  font-size: 24px;
+  color: #0A9396;
+  margin-bottom: 20px;
+}
+
+.cookie-policy p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Seat Container Styling */
+.seat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Container*/
+.seat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+/*Row of seats*/
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*Aisle separator*/
+.aisle {
+  width: 10px;
+  height: 100%;
+  background-color: #ccc;
+  border-radius: 5px;
+}
+
+/* Button seat */
+.seat {
+  width: 50px;
+  height: 50px;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.seat:hover {
+  background-color: #d8e3e3;
+  transform: scale(1.1);
+}
+
+/* Active state when clicked */
+.seat.selected {
+  background-color: #0ED8DB;
+  border-color: #0A9396;
+}
+
+.seat:disabled {
+  background-color: #d0d0d0;
+  cursor: not-allowed;
+}
+
+.left-seats,
+.right-seats {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.left-seats {
+  margin-right: 10px;
+}
+
+.right-seats {
+  margin-left: 10px;
+}
+
+/* Flight Options Section */
+#flight-options {
+  margin: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  /* White background for a clean look */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 95, 115, 0.2);
+  /* Subtle shadow with theme color */
+}
+
+/* Section Heading */
+#flight-options h2 {
+  color: #005F73;
+  /* Deep teal for contrast */
+  font-size: 24px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Table Styling */
+#flight-options table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#flight-options th,
+#flight-options td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+#flight-options th {
+  background-color: #0A9396;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+#flight-options tbody tr {
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+
+#flight-options tbody tr:hover {
+  background-color: #f1f1f1;
+  color: #333333;
+  transform: scale(1.01);
+}
+
+#flight-options table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#Baggage {
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 50px;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+#Baggage h2 {
+  margin-top: 0;
+}
+
+#Baggage p {
+  font-weight: bold;
+  color: #005F73;
+}
+
+#Baggage label {
+  display: block;
+  margin-top: 10px;
+}
+
+.highlight {
+  color: #ff0000;
+  /* Highlight color (optional) */
+}
+
+#submit-button {
+  padding: 12px 20px;
+  background-color: #0a9396;
+  color: white;
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  margin-top: 20px;
+}
+
+#submit-button:disabled {
+  background-color: #ccc;
+}
+
+#submit-button:hover:not(:disabled) {
+  background-color: #0ed8db;
+  transform: scale(1.1);
+}
+
+#bookingForm {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+#bookingForm fieldset {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+#bookingForm label {
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+#bookingForm input,
+#bookingForm textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+#bookingForm textarea {
+  resize: vertical;
+}
+
+#bookingForm button {
+  background-color: #0a9396;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  margin-top: 20px;
+  width: 100%;
+}
+
+#bookingForm button:hover {
+  background-color: #0ed8db;
+  transform: scale(1.02);
+}

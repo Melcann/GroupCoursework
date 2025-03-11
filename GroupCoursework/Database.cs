@@ -1,4 +1,4 @@
-﻿tnamespace GroupCoursework
+﻿namespace GroupCoursework
 {
     public class _
     {

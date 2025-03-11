@@ -5,9 +5,7 @@ namespace GroupCoursework.Models
 {
     public class AddBaggageDto
     {
-
         public int BaggageID { get; set; }
-
         public int PassportId { get; set; }
 
     }

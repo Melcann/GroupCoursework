@@ -66,6 +66,23 @@ namespace GroupCoursework.Controllers
             return Ok(baggageEntity);
         }
 
+        //Delete baggage
+        [HttpDelete]
+        [Route("{BaggageID:int}")]
+        public IActionResult DeleteBaggage(int BaggageID)
+        {
+            var baggage = dbContext.Baggage.Find(BaggageID);
+
+            if (baggage == null)
+            {
+                return NotFound();
+            }
+
+            dbContext.Baggage.Remove(baggage);
+            dbContext.SaveChanges();
+            return Ok();
+        }
+
 
     }
 }

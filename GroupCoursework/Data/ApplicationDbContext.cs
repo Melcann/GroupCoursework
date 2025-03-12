@@ -11,8 +11,7 @@ namespace GroupCoursework.Data
         }
 
         public DbSet<Passengers> Passengers { get; set; }
-        
-        //public DbSet<Flights> Flights { get; set; }
+        public DbSet<Flights> Flights { get; set; }
         public DbSet<DestinationsPrices> DestinationsPrices { get; set; }
         public DbSet<Planes> Planes { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
@@ -29,7 +28,21 @@ namespace GroupCoursework.Data
             modelBuilder.Entity<Passengers>()
                 .Property(p => p.PassportID)
                 .ValueGeneratedNever(); // Prevents auto-increment
-            
+
+            modelBuilder.Entity<Flights>()
+                .Property(p => p.FlightID)
+                .ValueGeneratedNever(); // Prevents auto-increment
+
+            modelBuilder.Entity<Flights>()
+                .HasOne(f => f.Planes)
+                .WithMany()
+                .HasForeignKey(f => f.PlaneId);
+
+            modelBuilder.Entity<Flights>()
+                .HasOne(f => f.Destinations)
+                .WithMany()
+                .HasForeignKey(f => f.Destination);
+
             modelBuilder.Entity<Baggage>()
                 .Property(p => p.BaggageID)
                 .ValueGeneratedNever();

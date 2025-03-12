@@ -1,43 +1,43 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-class SelectFlight
+[ApiController]
+[Route("api/flights")]
+public class FlightsController : ControllerBase
 {
-    static void Main()
+    private static readonly List<Flight> Flights = new List<Flight>
     {
-        // Initialize the flight database
-        FlightDatabase flightDatabase = new FlightDatabase();
+        new Flight { Id = 1, Destination = "Paris", Time = "10:30 AM", Duration = "2h 30m", Price = 250 },
+        new Flight { Id = 2, Destination = "London", Time = "1:00 PM", Duration = "1h 45m", Price = 200 },
+        new Flight { Id = 3, Destination = "Croatia", Time = "3:15 PM", Duration = "2h 15m", Price = 220 },
+        new Flight { Id = 4, Destination = "Spain", Time = "5:45 PM", Duration = "3h 10m", Price = 270 }
+    };
 
-        // Display available flight options
-        Console.WriteLine("Available Flights:");
-        for (int i = 0; i < flightDatabase.Flights.Count; i++)
-        {
-            Flight flight = flightDatabase.Flights[i];
-            Console.WriteLine($"{i + 1}. Destination: {flight.Destination}, Time: {flight.Time}, Duration: {flight.Duration}, Price: ${flight.Price}");
-        }
-
-        // Prompt user to select a flight
-        Console.Write("\nEnter the number of your chosen flight (1-4): ");
-        string userInput = Console.ReadLine();
-
-        // Validate user input and display ticket
-        if (int.TryParse(userInput, out int choice) && choice >= 1 && choice <= flightDatabase.Flights.Count)
-        {
-            Flight selectedFlight = flightDatabase.Flights[choice - 1];
-
-            // Display "ticket" message
-            Console.WriteLine("\n========= YOUR TICKET =========");
-            Console.WriteLine($"Destination: {selectedFlight.Destination}");
-            Console.WriteLine($"Departure Time: {selectedFlight.Time}");
-            Console.WriteLine($"Duration: {selectedFlight.Duration}");
-            Console.WriteLine($"Price: ${selectedFlight.Price}");
-            Console.WriteLine("================================");
-        }
-        else
-        {
-            Console.WriteLine("Invalid selection. Please restart and choose a valid number.");
-        }
+    [HttpGet]
+    public IActionResult GetFlights()
+    {
+        return Ok(Flights);
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetFlight(int id)
+    {
+        var flight = Flights.Find(f => f.Id == id);
+        if (flight == null)
+        {
+            return NotFound("Flight not found");
+        }
+        return Ok(flight);
+    }
+}
+
+public class Flight
+{
+    public int Id { get; set; }
+    public string Destination { get; set; }
+    public string Time { get; set; }
+    public string Duration { get; set; }
+    public decimal Price { get; set; }
 }
 
 

@@ -53,7 +53,7 @@ namespace GroupCoursework.Controllers
                 return BadRequest("Invalid PlaneId. Plane does not exist.");
             }
 
-            // Validate if DestinationId exists
+            // Validate if Destination exists
             var destination = dbContext.DestinationsPrices.Find(addFlightsDto.Destination);
             if (destination == null)
             {
@@ -79,6 +79,53 @@ namespace GroupCoursework.Controllers
             dbContext.SaveChanges();
 
             return Ok(flightsEntity);
+        }
+
+        //Update flight details
+        [HttpPut]
+        [Route("{FlightID:int}")]
+        public IActionResult UpdateFlight(int FlightID, UpdateFlightsDto updateFlightsDto)
+        {
+            var flight = dbContext.Flights.Find(FlightID);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            // Validate if Destination exists
+            var destination = dbContext.DestinationsPrices.Find(updateFlightsDto.Destination);
+            if (destination == null)
+            {
+                return BadRequest("Invalid Destination. Destination does not exist.");
+            }
+
+            flight.PlaneId = updateFlightsDto.PlaneId;
+            flight.Destination = updateFlightsDto.Destination;
+            flight.DepartureTime = updateFlightsDto.DepartureTime;
+            flight.ReturnTime = updateFlightsDto.ReturnTime;
+            flight.GateNumber = updateFlightsDto.GateNumber;
+            flight.Duration = updateFlightsDto.Duration;
+
+            dbContext.SaveChanges();
+
+            return Ok(flight);
+        }
+
+        //Delete Flight
+        [HttpDelete]
+        [Route("{FlightID:int}")]
+        public IActionResult DeleteFlight(int FlightID)
+        {
+            var flight = dbContext.Flights.Find(FlightID);
+
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            dbContext.Flights.Remove(flight);
+            dbContext.SaveChanges();
+            return Ok();
         }
 
     }

@@ -28,42 +28,45 @@
         </nav>
     </header>
 
-    <!--display flight options and select-->
-    <div id="flight-options">
-        <h2>Flight Options</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Duration</th>
-                    <th>Price</th>
-                    <th>From</th>
-                    <th>To</th>
-                </tr>
-            </thead>
-            <tbody id="flight-table-body"></tbody>
-        </table>
-    </div>
+   <!-- Flight Options -->
+<div id="flight-options">
+    <h2>Flight Options</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+        </thead>
+        <tbody id="flight-table-body">
+            <!-- Flight options will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
 
-    <div id="Baggage">
+
+    <!-- Baggage Section -->
+    <div id="baggage">
         <h2>Baggage</h2>
         <p>Included for free: 1 carry-on bag (up to 10kg).</p>
 
         <p>Select one checked baggage option:</p>
-        <label>
-            <input type="radio" name="checked-baggage" value="0" checked> No checked baggage
-        </label>
-        <label>
-            <input type="radio" name="checked-baggage" value="15"> 15kg checked baggage (£15)
-        </label>
-        <label>
-            <input type="radio" name="checked-baggage" value="23"> 23kg checked baggage (£20)
-        </label>
-        <label>
-            <input type="radio" name="checked-baggage" value="35"> 35kg checked baggage (£30)
-        </label>
-        <p><strong>Total: <span id="baggage-cost">£0</span></strong></p>
+        <form id="baggage-form">
+            <label>
+                <input type="radio" name="checked-baggage" value="0" checked> No checked baggage
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="checked-baggage" value="23"> 23kg checked baggage (£15)
+            </label>
+        </form>
+
+        <p><strong>Baggage Total: <span id="baggage-cost">£0</span></strong></p>
     </div>
+
 
     <h2>Plane Seating</h2>
     <p>Select your preferred seat:</p>
@@ -82,11 +85,9 @@
     <form action="" method="post" id="bookingForm">
         <fieldset>
             <h2>Passenger Details</h2>
-            <label for="first-names">First Names:</label>
-            <input type="text" id="first-names" name="first-names" required>
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="full-name" name="full-name" required>
 
-            <label for="last-name">Last Name:</label>
-            <input type="text" id="last-name" name="last-name" required>
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -136,7 +137,6 @@
         </div>
     </footer>
 
-    <script src="/JS/flights.js"></script>
     <script src="/JS/ui-interactions.js"></script>
 
 </body>

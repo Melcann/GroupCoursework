@@ -1,4 +1,4 @@
-﻿namespace GroupCoursework
+﻿namespace GroupCoursework.Functionality
 {
     public class CheckBaggage
     {

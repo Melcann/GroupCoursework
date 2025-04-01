@@ -1,7 +1,7 @@
 ﻿using System;
 using GroupCoursework.Models.Entities;
 
-namespace GroupCoursework
+namespace GroupCoursework.Functionality
 {
     public class Payment
     {

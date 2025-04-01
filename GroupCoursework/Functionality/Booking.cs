@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GroupCoursework.Models.Entities
+namespace GroupCoursework.Functionality
 {
     public class Booking
     {

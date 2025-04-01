@@ -5,7 +5,7 @@ namespace GroupCoursework.Models.Entities
 {
     public class Bookings
     {
-        /*
+        
         [Key]
         public int BookingId { get; set; }
 
@@ -22,7 +22,7 @@ namespace GroupCoursework.Models.Entities
         public bool PaymentStatus { get; set; }
 
         public required int SeatNumber { get; set; }   
-        */
+        
 
     }
 }

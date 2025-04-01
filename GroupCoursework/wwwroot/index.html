@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/styles.css">
+    <link rel="stylesheet" href="CSS/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <title>AMS</title>
 </head>
@@ -14,46 +14,56 @@
         <h1 class="logo">JetSetGo</h1>
         <nav class="page-links">
             <a href="index.html">Travel now</a>
-            <a href="/HTML/support.html">Legal and Support</a>
+            <a href="HTML/support.html">Legal and Support</a>
             <a href="#" id="admin-link">Admin</a>
+    
             <div id="login-section" class="login-section">
-                <form>
+                <form id="admin-login-form">
                     <label for="admin-id">Admin ID:</label>
                     <input type="text" id="admin-id" name="admin-id" required>
+                    
                     <label for="admin-password">Password:</label>
                     <input type="password" id="admin-password" name="admin-password" required>
+                    
                     <button type="submit">Login</button>
+                    
+                    <p id="error-message" style="color: red; display: none;">Invalid Admin ID or Password.</p>
                 </form>
             </div>
         </nav>
-    </header>    
-    
+    </header>      
 
     <div class="image-container">
         <h2 class="overlay-text">Seamless Flights, Endless Destinations</h2>
-        <img src="images/beach.jpg" alt="Beach" class="beach">
+        <img src="images/beach.jpg" alt="Beach View" class="beach">
     </div>
 
     <div class="form-container">
-        <form>
-            <select id="flight-type">
+        <form action="search-flights.php" method="GET">
+            <select id="flight-type" name="flight-type">
                 <option value="" disabled selected>Flight Type</option>
                 <option value="economy">Economy</option>
-                <option value="premium">Premium Economy</option>
+                <option value="premium-economy">Premium Economy</option>
                 <option value="business">Business Class</option>
-                <option value="firstClass">First Class</option>
+                <option value="first-class">First Class</option>
             </select>
 
-            <select id="leaving-from">
+            <select id="leaving-from" name="leaving-from">
                 <option value="" disabled selected>Departure Airport</option>
                 <option value="stansted">Stansted Airport</option>
+                <option value="heathrow">Heathrow Airport</option>
+                <option value="gatwick">Gatwick Airport</option>
             </select>
 
-            <select id="going-to">
+            <select id="going-to" name="going-to">
                 <option value="" disabled selected>Select Destination Airport</option>
+                <option value="jfk">John F. Kennedy Airport (JFK)</option>
+                <option value="lax">Los Angeles Airport (LAX)</option>
+                <option value="dubai">Dubai International Airport (DXB)</option>
+                <option value="singapore">Singapore Changi Airport (SIN)</option>
             </select>
 
-            <input type="date" id="flight-date" name="flight-date">
+            <input type="date" id="flight-date" name="flight-date" required>
             <button type="submit">Search Flights</button>
         </form>
     </div>
@@ -102,6 +112,40 @@
         </div>
     </div>
 
+    <div class="hotel-popular-destinations">
+        <h2>Hotel Deals For the Day</h2>
+        <div class="hotel-destination-cards">
+            <div class="hotel-destination-card">
+                <a href="https://royal-london-hotel.at-hotels.com/en/" target="_blank">
+                    <img src="images/Royal.jpg" class="hotel-destination-image">
+                    <p class="hotel-destination-name">Royal National Hotel</p>
+                    <h4>London, United Kingdom <br> Good • 12,934 reviews</h4>
+                </a>
+            </div>
+            <div class="hotel-destination-card">
+                <a href="https://www.dorchestercollection.com/london/the-dorchester" target="_blank">
+                    <img src="images/Dorchester.jpg" class="hotel-destination-image">
+                    <p class="hotel-destination-name">The Dorchester</p>
+                    <h4>Mayfair, United Kingdom <br> Exceptional • 238 reviews</h4>
+                </a>
+            </div>
+            <div class="hotel-destination-card">
+                <a href="https://www.marriott.com/en-gb/default.mi?nst=paid&cid=PAI_GLB00050JC_GLE000BM3U_GLF000OP0J&ppc=ppc&pId=uktbppc&gad_source=1&gclid=Cj0KCQjwqIm_BhDnARIsAKBYcmv1h9dlx_xz8E0vOGSfj9Otlfnzvsh0sxKZ10AqktVVpkmO80Oo6mkaAgLzEALw_wcB&gclsrc=aw.ds" target="_blank">
+                    <img src="images/Marriott.png" class="hotel-destination-image">
+                    <p class="hotel-destination-name">London Marriot Hotel</p>
+                    <h4>London, United Kingdom <br> Very Good • 1,000 reviews</h4>
+                </a>
+            </div>
+            <div class="hotel-destination-card">
+                <a href="https://www.royallancaster.com/" target="_blank">
+                    <img src="images/Lancaster.png" class="hotel-destination-image">
+                    <p class="hotel-destination-name">Royal Lancaster London</p>
+                    <h4>London, United Kingdom <br> Exceptional • 1,005 reviews</h4>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <h3>JetSetGo Bookings</h3>
         <p>&copy; 2025 Airport Management System. All Rights Reserved.</p>
@@ -114,11 +158,12 @@
 
         <div>
             <h4>Legal</h4>
-            <a href="/HTML/support.html">Terms of Service</a> |
-            <a href="/HTML/support.html">Privacy Policy</a>
+            <a href="HTML/support.html">Terms of Service</a> |
+            <a href="HTML/support.html">Privacy Policy</a>
         </div>
     </footer>
-    <script src="/JS/ui-interactions.js" defer></script>
+
+    <script src="JS/ui-interactions.js" defer></script>
 </body>
 
 </html>

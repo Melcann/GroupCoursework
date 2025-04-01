@@ -15,11 +15,11 @@ namespace GroupCoursework.Data
         public DbSet<DestinationsPrices> DestinationsPrices { get; set; }
         public DbSet<Planes> Planes { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
-        /*
-        public DbSet<Bookings> Bookings { get; set; } 
+        
+        //public DbSet<Bookings> Bookings { get; set; } 
         public DbSet<Employees> Employees { get; set; }
         
-        */
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace GroupCoursework.Data
             modelBuilder.Entity<Flights>()
                 .HasOne(f => f.Planes)
                 .WithMany()
-                .HasForeignKey(f => f.PlaneId);
+                .HasForeignKey(f => f.PlaneId); // References to the foreign key from the planes table
 
             modelBuilder.Entity<Flights>()
                 .HasOne(f => f.Destinations)
@@ -62,6 +62,15 @@ namespace GroupCoursework.Data
             modelBuilder.Entity<Planes>()
                 .Property(p => p.PlaneId)
                 .ValueGeneratedNever();
+
+            modelBuilder.Entity<Employees>()
+                .Property(p => p.EmployeeId)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<Employees>()
+                .HasOne(f => f.Flights)
+                .WithMany()
+                .HasForeignKey(f => f.FlightID);
         }
 
       

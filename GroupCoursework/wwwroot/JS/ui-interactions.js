@@ -65,12 +65,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const aisle = document.createElement('span');
         aisle.classList.add('aisle');
 
-        // Append the left seats, aisle, and right seats to the row
+        //left seats, aisle, and right seats to the row
         rowDiv.appendChild(leftSeats);
         rowDiv.appendChild(aisle);
         rowDiv.appendChild(rightSeats);
 
-        // Insert the row into the container
         seatContainer.appendChild(rowDiv);
     });
 });
+
+// Login and logout
+document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("admin-login-form").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+
+        const adminId = document.getElementById("admin-id").value;
+        const adminPassword = document.getElementById("admin-password").value;
+
+        if (adminId === "Adminjet" && adminPassword === "AdminJet123") {
+            sessionStorage.setItem('adminLoggedIn', 'true');
+            
+            window.location.href = "HTML/admin.html";
+        } else {
+            document.getElementById("error-message").style.display = "block";
+        }
+    });
+});
+
+window.onload = function() {
+    if (window.location.pathname.includes("admin.html")) {
+        if (!sessionStorage.getItem('adminLoggedIn')) {
+            window.location.replace("../index.html");
+        }
+    }
+};
+
+function logout() {
+    sessionStorage.removeItem('adminLoggedIn');
+    localStorage.removeItem('adminLoggedIn');
+
+    window.location.replace("../index.html");
+}

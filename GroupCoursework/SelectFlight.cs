@@ -1,43 +1,113 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using GroupCoursework.Data;
+using GroupCoursework.Models.Entities;
 
 [ApiController]
 [Route("api/flights")]
 public class FlightsController : ControllerBase
 {
-    private static readonly List<Flight> Flights = new List<Flight>
-    {
-        new Flight { Id = 1, Destination = "Paris", Time = "10:30 AM", Duration = "2h 30m", Price = 250 },
-        new Flight { Id = 2, Destination = "London", Time = "1:00 PM", Duration = "1h 45m", Price = 200 },
-        new Flight { Id = 3, Destination = "Croatia", Time = "3:15 PM", Duration = "2h 15m", Price = 220 },
-        new Flight { Id = 4, Destination = "Spain", Time = "5:45 PM", Duration = "3h 10m", Price = 270 }
-    };
+    private readonly ApplicationDbContext _context;
 
-    [HttpGet]
-    public IActionResult GetFlights()
+    public FlightsController(ApplicationDbContext context)
     {
-        return Ok(Flights);
+        _context = context;
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetFlight(int id)
+    // Query the database for available flights based on the selected destination
+    [HttpGet("destination/{destination}")]
+    public async Task<IActionResult> GetFlightsByDestination(string destination)
     {
-        var flight = Flights.Find(f => f.Id == id);
+        var flights = await _context.Flights
+            .Where(f => f.Destination == destination)
+            .ToListAsync();
+
+        if (!flights.Any())
+        {
+            return NotFound("No flights available for this destination.");
+        }
+
+        return Ok(flights);
+    }
+
+    // Fetch flight details of the selected date
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetFlightDetails(int id)
+    {
+        var flight = await _context.Flights.FindAsync(id);
         if (flight == null)
         {
-            return NotFound("Flight not found");
+            return NotFound("Flight not found.");
         }
+
         return Ok(flight);
+    }
+
+    // Book a flight
+    [HttpPost("book")]
+    public async Task<IActionResult> BookFlight([FromBody] BookingRequest request)
+    {
+        var flight = await _context.Flights.FindAsync(request.FlightId);
+        if (flight == null)
+        {
+            return NotFound("Flight not found.");
+        }
+
+        var passenger = new Passengers
+        {
+            PassportID = request.PassportNumbers,
+            FullName = request.FullName,
+            Email = request.Email,
+            PhoneNumber = request.PhoneNumber,
+            Address = request.Address,
+            DateOfBirth = request.DateOfBirth,
+            CheckedIn = false,
+            Baggage = request.BaggageWeight > 0
+        };
+
+        _context.Passengers.Add(passenger);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "Booking confirmed", Flight = flight });
+    }
+
+    // Assign seat to passenger
+    [HttpPost("assign-seat")]
+    public async Task<IActionResult> AssignSeat([FromBody] SeatAssignmentRequest request)
+    {
+        var passenger = await _context.Passengers.FindAsync(request.PassportNumber);
+        if (passenger == null)
+        {
+            return NotFound("Passenger not found.");
+        }
+
+        passenger.SeatNumber = request.SeatNumber;
+
+        _context.Passengers.Update(passenger);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "Seat assigned successfully", Seat = request.SeatNumber });
     }
 }
 
-public class Flight
+// Models for request handling
+public class BookingRequest
 {
-    public int Id { get; set; }
-    public string Destination { get; set; }
-    public string Time { get; set; }
-    public string Duration { get; set; }
-    public decimal Price { get; set; }
+    public int FlightId { get; set; }
+    public string FullName { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public string PassportNumber { get; set; }
+    public string Address { get; set; }
+    public DateOnly DateOfBirth { get; set; }
+    public int BaggageWeight { get; set; }
 }
 
+public class SeatAssignmentRequest
+{
+    public string PassportNumber { get; set; }
+    public string SeatNumber { get; set; }
+}
 

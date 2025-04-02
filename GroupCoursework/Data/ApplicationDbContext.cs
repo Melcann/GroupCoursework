@@ -16,7 +16,7 @@ namespace GroupCoursework.Data
         public DbSet<Planes> Planes { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
         
-        //public DbSet<Bookings> Bookings { get; set; } 
+        public DbSet<Bookings> Bookings { get; set; } 
         public DbSet<Employees> Employees { get; set; }
         
         
@@ -41,7 +41,7 @@ namespace GroupCoursework.Data
             modelBuilder.Entity<Flights>()
                 .HasOne(f => f.Destinations)
                 .WithMany()
-                .HasForeignKey(f => f.Destination);
+                .HasForeignKey(f => f.Destination); // References to the foreign key from the Destinations and prices table
 
             modelBuilder.Entity<Baggage>()
                 .Property(p => p.BaggageID)
@@ -49,7 +49,7 @@ namespace GroupCoursework.Data
             
             modelBuilder.Entity<Passengers>()
                 .Property(p => p.Baggage)
-                .HasDefaultValue(false);
+                .HasDefaultValue(false); // Boolean set to false
 
             modelBuilder.Entity<Passengers>()
                 .Property(p => p.CheckedIn)
@@ -57,7 +57,7 @@ namespace GroupCoursework.Data
 
             modelBuilder.Entity<Planes>()
                 .Property(p => p.Availability)
-                .HasDefaultValue(true);
+                .HasDefaultValue(true); //Boolean set to true
 
             modelBuilder.Entity<Planes>()
                 .Property(p => p.PlaneId)
@@ -70,11 +70,33 @@ namespace GroupCoursework.Data
             modelBuilder.Entity<Employees>()
                 .HasOne(f => f.Flights)
                 .WithMany()
-                .HasForeignKey(f => f.FlightID);
+                .HasForeignKey(f => f.FlightID); // References to Flights table
+
+            modelBuilder.Entity<Bookings>()
+            .Property(b => b.BookingId)
+            .HasDefaultValueSql("'BK' + FORMAT(NEXT VALUE FOR BookingIdSequence, '0000')");
+
+            // Create a sequence for the numeric part
+            modelBuilder.HasSequence<int>("BookingIdSequence");
+
+            modelBuilder.Entity<Bookings>()
+                .HasOne(f => f.Passengers)
+                .WithMany()
+                .HasForeignKey(f => f.PassportId); 
+
+            modelBuilder.Entity<Bookings>()
+                .HasOne(f => f.Flights)
+                .WithMany()
+                .HasForeignKey(f => f.FlightID); 
+
+            modelBuilder.Entity<Bookings>()
+                .Property(p => p.PaymentStatus)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<Bookings>()
+                .Property(p => p.SeatNumber)
+                .ValueGeneratedNever();
         }
-
-      
-
 
     }
 }

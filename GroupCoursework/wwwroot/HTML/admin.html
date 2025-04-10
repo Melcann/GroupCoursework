@@ -183,37 +183,64 @@
             </table>
         </section>
 
-        <!-- Gate Section -->
-        <section id="gate_section">
-            <h2>Gate Management</h2>
-            <form id="addGateForm">
+        <!-- Flight Section -->
+        <section id="flight_section">
+            <h2>Flight Management</h2>
+            <form id="addFlightForm">
                 <div class="form-group">
-                    <label for="gate_id">Gate ID:</label>
-                    <input type="text" id="gate_id" name="gate_id" required>
+                    <label for="flight_id">Flight ID:</label>
+                    <input type="number" id="flight_id" name="flight_id" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="gate_status">Status:</label>
-                    <select id="gate_status" name="gate_status">
-                        <option value="Open">Open</option>
-                        <option value="Closed">Closed</option>
-                    </select>
+                    <label for="plane_id">Plane ID:</label>
+                    <input type="number" id="plane_id" name="plane_id" required>
                 </div>
 
-                <button type="submit">Add Gate</button>
+                <div class="form-group">
+                    <label for="destination">Destination ID:</label>
+                    <input type="number" id="destination" name="destination" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="departure_time">Departure Time:</label>
+                    <input type="datetime-local" id="departure_time" name="departure_time" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="return_time">Return Time:</label>
+                    <input type="datetime-local" id="return_time" name="return_time" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gate_number">Gate Number:</label>
+                    <input type="text" id="gate_number" name="gate_number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Duration (mins):</label>
+                    <input type="number" id="duration" name="duration" required>
+                </div>
+
+                <button type="submit">Add Flight</button>
             </form>
 
             <br>
-            <h3>Gate List</h3>
-            <table id="gate_list">
+            <h3>Flight List</h3>
+            <table id="flight_list">
                 <thead>
                     <tr>
-                        <th>Gate ID</th>
-                        <th>Status</th>
+                        <th>Flight ID</th>
+                        <th>Plane ID</th>
+                        <th>Destination ID</th>
+                        <th>Departure</th>
+                        <th>Return</th>
+                        <th>Gate</th>
+                        <th>Duration</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="gateList"></tbody>
+                <tbody id="flightList"></tbody>
             </table>
         </section>
 
@@ -236,7 +263,7 @@
         </div>
     </footer>
     <script src="../JS/ui-interactions.js" defer></script>
-    <script src="../JS/plane.js" ></script>
+    <script src="../JS/plane.js"></script>
 </body>
 
 </html>

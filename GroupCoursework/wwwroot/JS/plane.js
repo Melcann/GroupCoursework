@@ -5,21 +5,16 @@
     const seatCapacity = parseInt(document.getElementById("seat_capacity").value);
     const weightCapacity = parseFloat(document.getElementById("weight_capacity").value);
     const availabilityValue = document.getElementById("availability").value;
-
-    // Convert string to boolean
     const availability = availabilityValue === "Available";
 
-    // Wrap inside `addPlanesDto` as required by the API
-    const payload = {
-        addPlanesDto: {
-            planeId,
-            seatCapacity,
-            weightCapacity,
-            availability
-        }
+    const planeData = {
+        planeId,
+        seatCapacity,
+        weightCapacity,
+        availability
     };
 
-    console.log("Submitting wrapped payload:", payload);
+    console.log("Submitting planeData:", planeData);
 
     try {
         const response = await fetch('https://localhost:7285/api/Planes', {
@@ -27,7 +22,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(planeData)
         });
 
         console.log("Server response:", response);
@@ -57,6 +52,7 @@
     }
 });
 
+
 async function deletePlane(planeId) {
     console.log("Deleting plane with ID:", planeId);
 
@@ -70,7 +66,7 @@ async function deletePlane(planeId) {
         if (response.ok) {
             console.log("Plane deleted successfully.");
             alert("Plane deleted successfully.");
-            location.reload(); // Optional: reload page or manually remove the row
+            location.reload(); 
         } else {
             console.error("Failed to delete plane. Status:", response.status);
             alert("Failed to delete plane.");

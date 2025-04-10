@@ -1,22 +1,28 @@
 ﻿document.getElementById("addPlaneForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const planeId = document.getElementById("plane_id").value;
-    const seatCapacity = document.getElementById("seat_capacity").value;
-    const weightCapacity = document.getElementById("weight_capacity").value;
-    const availability = document.getElementById("availability").value;
+    const planeId = parseInt(document.getElementById("plane_id").value);
+    const seatCapacity = parseInt(document.getElementById("seat_capacity").value);
+    const weightCapacity = parseFloat(document.getElementById("weight_capacity").value);
+    const availabilityValue = document.getElementById("availability").value;
 
+    // Convert string to boolean
+    const availability = availabilityValue === "Available";
+
+    // Wrap inside `addPlanesDto` as required by the API
     const payload = {
-        planeId: parseInt(planeId),
-        seatCapacity: parseInt(seatCapacity),
-        weightCapacity: parseFloat(weightCapacity),
-        availability: availability
+        addPlanesDto: {
+            planeId,
+            seatCapacity,
+            weightCapacity,
+            availability
+        }
     };
 
-    console.log("Submitting plane data:", payload);
+    console.log("Submitting wrapped payload:", payload);
 
     try {
-        const response = await fetch('https://localhost:7285/api/planes', {
+        const response = await fetch('https://localhost:7285/api/Planes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -33,13 +39,12 @@
 
             const newRow = document.createElement("tr");
             newRow.innerHTML = `
-                    <td>${result.planeId}</td>
-                    <td>${result.seatCapacity}</td>
-                    <td>${result.availability}</td>
-                    <td><button onclick="deletePlane(${result.planeId})">Delete</button></td>
-                `;
+                <td>${result.planeId}</td>
+                <td>${result.seatCapacity}</td>
+                <td>${result.availability}</td>
+                <td><button onclick="deletePlane(${result.planeId})">Delete</button></td>
+            `;
             document.getElementById("planeList").appendChild(newRow);
-
             document.getElementById("addPlaneForm").reset();
         } else {
             const err = await response.text();
@@ -58,14 +63,14 @@ async function deletePlane(planeId) {
     if (!confirm("Are you sure you want to delete this plane?")) return;
 
     try {
-        const response = await fetch(`https://localhost:7285/api/planes/${planeId}`, {
+        const response = await fetch(`https://localhost:5074/api/Planes/${planeId}`, {
             method: 'DELETE'
         });
 
         if (response.ok) {
             console.log("Plane deleted successfully.");
             alert("Plane deleted successfully.");
-            location.reload(); // Optional, or remove the row from DOM
+            location.reload(); // Optional: reload page or manually remove the row
         } else {
             console.error("Failed to delete plane. Status:", response.status);
             alert("Failed to delete plane.");

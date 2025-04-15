@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GroupCoursework.Models.Entities
 {
@@ -14,6 +15,7 @@ namespace GroupCoursework.Models.Entities
         public Boolean Baggage { get; set; } = false;
         public Boolean CheckedIn { get; set; } = false;
         public required string Email { get; set; }
+        public required string FlightType { get; set; }
 
     }
 }

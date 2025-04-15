@@ -55,6 +55,7 @@ namespace GroupCoursework.Controllers
                 Baggage = addPassengerDto.Baggage,
                 CheckedIn = addPassengerDto.CheckedIn,
                 Email = addPassengerDto.Email,
+                FlightType = addPassengerDto.FlightType,
             };
 
             dbContext.Passengers.Add(passengersEntity);

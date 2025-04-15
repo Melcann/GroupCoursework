@@ -59,7 +59,7 @@ async function deletePlane(planeId) {
     if (!confirm("Are you sure you want to delete this plane?")) return;
 
     try {
-        const response = await fetch(`https://localhost:5074/api/Planes/${planeId}`, {
+        const response = await fetch(`https://localhost:7285/api/Planes/${planeId}`, {
             method: 'DELETE'
         });
 

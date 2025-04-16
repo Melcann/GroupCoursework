@@ -17,30 +17,6 @@ namespace GroupCoursework.Controllers
             this.dbContext = dbContext;
         }
 
-        //Get all Admins.
-        [HttpGet]
-        public IActionResult GetAllAdmins()
-        {
-            var allAdmin = dbContext.Admin.ToList();
-
-            return Ok(allAdmin);
-        }
-
-        //Search Admin by their username.
-        [HttpGet]
-        [Route("{UserName}")]
-        public IActionResult GetAdminByUserName(string UserName)
-        {
-            var admin = dbContext.Admin.Find(UserName);
-
-            if (admin == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(admin);
-        }
-
         //Add Admin to database
         [HttpPost]
         public IActionResult AddAdmin(AddAdminDto addAdminDto)

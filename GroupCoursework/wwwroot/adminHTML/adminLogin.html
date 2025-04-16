@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/CSS/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>AMS login</title>
+</head>
+
+<body class="admin-page">
+
+    <header class="header-container">
+        <h1 class="logo">JetSetGo</h1>
+        <h1>Staff Administration</h1>
+    </header>
+
+    <div class="parent-container">
+        <div class="login-container">
+            <h2>Login in</h2>
+            <form onsubmit="event.preventDefault(); login();">
+                <label for="branchId">Branch ID</label>
+                <input type="text" id="branchId" name="branchId" required />
+
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required oncopy="return false" onpaste="return false" />
+
+                <button type="submit">Login</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </div>
+</body>
+</html>

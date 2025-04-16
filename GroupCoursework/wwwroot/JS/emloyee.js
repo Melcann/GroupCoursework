@@ -1,113 +1,115 @@
-﻿// Fetch all employees
-async function fetchEmployees() {
-    console.log("Fetching all employees...");
+﻿document.addEventListener("DOMContentLoaded", function () {
+    const employeeTable = document.getElementById("employeeList");
+    const searchEmployee = document.getElementById("search-employee");
+    const employeeForm = document.getElementById("addEmployeeForm");
+    console.log("Page loaded and attempt to fetch employees...");
 
-    try {
-        const response = await fetch('https://localhost:7285/api/employees');
-        if (!response.ok) throw new Error('Failed to fetch employees');
-
-        const employees = await response.json();
-        console.log("Employees fetched:", employees);
-
-        const employeeList = document.getElementById('employeeList');
-        employeeList.innerHTML = ''; // Clear existing employee list
-
-        employees.forEach(employee => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${employee.employeeId}</td>
-                <td>${employee.employeeName}</td>
-                <td>${employee.role}</td>
-                <td>${employee.flightID}</td>
-                <td>
-                    <button onclick="deleteEmployee(${employee.employeeId})">Delete</button>
-                    <button onclick="updateEmployee(${employee.employeeId})">Update</button>
-                </td>
-            `;
-            employeeList.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error fetching employees:', error.message);
+    // Display all employees
+    function displayEmployees() {
+        fetch("https://localhost:7285/api/Employees")
+            .then(response => response.json())
+            .then(data => {
+                console.log("Employees fetched:", data);
+                employeeTable.innerHTML = "";
+                data.forEach(employee => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${employee.employeeId}</td>
+                        <td>${employee.employeeName}</td>
+                        <td>${employee.role}</td>
+                        <td>${employee.flightID || "N/A"}</td>
+                        <td>
+                            <button onclick="deleteEmployee(${employee.employeeId})">Delete</button>
+                        </td>
+                    `;
+                    employeeTable.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Error fetching employees:", error));
     }
-}
 
-// Add a new employee
-document.getElementById('addEmployeeForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    console.log("Submitting new employee...");
+    // Adding a new employee
+    employeeForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const employeeId = document.getElementById('employee_id').value.trim();
-    const employeeName = document.getElementById('employee_name').value.trim();
-    const role = document.getElementById('role').value.trim();
-    const flightID = document.getElementById('assigned_flightID').value.trim();
+        const newEmployee = {
+            EmployeeId: document.getElementById("employee_id").value,
+            EmployeeName: document.getElementById("employee_name").value,
+            Role: document.getElementById("role").value,
+            FlightID: document.getElementById("assigned_flightID").value || null
+        };
 
-    const newEmployee = { employeeId, employeeName, role, flightID };
-
-    console.log("Sending employee data:", newEmployee);
-
-    try {
-        const response = await fetch('https://localhost:7285/api/employees', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+        fetch("https://localhost:7285/api/Employees", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(newEmployee)
-        });
-        if (!response.ok) throw new Error('Failed to add employee');
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Employee added:", data);
+                displayEmployees();
+                employeeForm.reset();
+            })
+            .catch(error => console.error("Error adding employee:", error));
+    });
 
-        const addedEmployee = await response.json();
-        console.log('Employee added successfully:', addedEmployee);
-        fetchEmployees();
-    } catch (error) {
-        console.error('Error adding employee:', error.message);
-    }
+    // Searching employee by ID
+    searchEmployee.addEventListener("input", function () {
+        const employeeId = searchEmployee.value.trim();
+        console.log("Search input:", employeeId);
+        if (employeeId) {
+            fetch(`https://localhost:7285/api/Employees/${employeeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Search result:", data);
+                    employeeTable.innerHTML = "";
 
-    document.getElementById('addEmployeeForm').reset();
-});
-
-// Delete an employee
-async function deleteEmployee(employeeId) {
-    console.log(`Attempting to delete employee ID: ${employeeId}`);
-
-    try {
-        const response = await fetch(`https://localhost:7285/api/employees/${employeeId}`, { method: 'DELETE' });
-        if (!response.ok) throw new Error(`Failed to delete employee with ID ${employeeId}`);
-
-        console.log(`Employee with ID ${employeeId} deleted successfully`);
-        fetchEmployees();
-    } catch (error) {
-        console.error('Error deleting employee:', error.message);
-    }
-}
-
-// Update an employee
-async function updateEmployee(employeeId) {
-    console.log(`Initiating update for employee ID: ${employeeId}`);
-
-    const newRole = prompt("Enter new role for employee:");
-    if (newRole) {
-        const updatedData = { role: newRole.trim() };
-        console.log("Sending update data:", updatedData);
-
-        try {
-            const response = await fetch(`https://localhost:7285/api/employees/${employeeId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedData)
-            });
-            if (!response.ok) throw new Error(`Failed to update employee with ID ${employeeId}`);
-
-            const updatedEmployee = await response.json();
-            console.log(`Employee updated successfully:`, updatedEmployee);
-            fetchEmployees();
-        } catch (error) {
-            console.error('Error updating employee:', error.message);
+                    if (data) {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${data.employeeId}</td>
+                            <td>${data.employeeName}</td>
+                            <td>${data.role}</td>
+                            <td>${data.flightID || "N/A"}</td>
+                            <td>
+                                <button onclick="deleteEmployee(${data.employeeId})">Delete</button>
+                            </td>
+                        `;
+                        employeeTable.appendChild(row);
+                    } else {
+                        const noResultRow = document.createElement("tr");
+                        noResultRow.innerHTML = `<td colspan="5">No employee found with ID ${employeeId}</td>`;
+                        employeeTable.appendChild(noResultRow);
+                    }
+                })
+                .catch(error => console.error("Error fetching employee by ID:", error));
+        } else {
+            displayEmployees();  // Show all employees if the search is empty
         }
-    } else {
-        console.log("Update cancelled by user.");
-    }
-}
+    });
 
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Page loaded, fetching employees...");
-    fetchEmployees();
+    // Delete an employee
+    window.deleteEmployee = function (employeeId) {
+        console.log("Deleting employee with ID:", employeeId);
+        fetch(`https://localhost:7285/api/Employees/${employeeId}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Employee deleted successfully");
+                    displayEmployees();
+                } else {
+                    console.error("Error finding employee:", response);
+                }
+            })
+            .catch(error => console.error("Error finding employee:", error));
+    };
+
+    // Load all employees when page is loaded
+    displayEmployees();
 });
+
+
+

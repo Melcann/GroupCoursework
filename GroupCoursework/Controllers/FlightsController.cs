@@ -43,7 +43,7 @@ namespace GroupCoursework.Controllers
 
         //Add planes to database
         [HttpPost]
-        public IActionResult AddFlight(AddFlightsDto addFlightsDto)
+        public IActionResult AddFlight([FromBody] AddFlightsDto addFlightsDto)
         {
 
             // Validate if PlaneId exists

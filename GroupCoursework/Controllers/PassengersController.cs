@@ -82,6 +82,7 @@ namespace GroupCoursework.Controllers
             passenger.Baggage = updatePassengerDto.Baggage;
             passenger.CheckedIn = updatePassengerDto.CheckedIn;
             passenger.Email = updatePassengerDto.Email;
+            passenger.FlightType = updatePassengerDto.FlightType;
 
             dbContext.SaveChanges();
 

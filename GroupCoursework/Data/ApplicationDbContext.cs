@@ -14,12 +14,10 @@ namespace GroupCoursework.Data
         public DbSet<Flights> Flights { get; set; }
         public DbSet<DestinationsPrices> DestinationsPrices { get; set; }
         public DbSet<Planes> Planes { get; set; }
-        public DbSet<Baggage> Baggage { get; set; }
-        
+        public DbSet<Baggage> Baggage { get; set; }    
         public DbSet<Bookings> Bookings { get; set; } 
         public DbSet<Employees> Employees { get; set; }
-        
-        
+        public DbSet<Admin> Admin { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -95,6 +93,10 @@ namespace GroupCoursework.Data
 
             modelBuilder.Entity<Bookings>()
                 .Property(p => p.SeatNumber)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<Admin>()
+                .Property(p => p.BranchId)
                 .ValueGeneratedNever();
         }
 

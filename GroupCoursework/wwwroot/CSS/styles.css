@@ -854,3 +854,86 @@ footer .legal-info a {
     background: #005F73;
     color: white;
 }
+
+body.admin-page {
+    background: linear-gradient(337deg, #02292b 8%, #0ED8DB 54%, #C9FEFF 98%);
+    background-size: 300% 300%;
+    animation: gradientShift 12s ease infinite;
+    min-height: 100vh;
+}
+
+/*shifting movement */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+    .login-container h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        color: #333;
+    }
+
+    .login-container label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 100%;
+        padding: 0.6rem;
+        margin-bottom: 1.2rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .login-container button {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #005F73;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .login-container button:hover {
+            background-color: #0ED8DB;
+        }
+
+    .login-container #message {
+        margin-top: 1rem;
+        text-align: center;
+        color: red;
+    }

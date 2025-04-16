@@ -60,15 +60,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-document.querySelectorAll('.page-links a[data-target]').forEach(link => {
-    link.addEventListener('click', function (e) {
-        e.preventDefault(); // stop hash
-
-        const targetId = this.getAttribute('data-target');
-        const targetSection = document.getElementById(targetId);
-
-        if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});

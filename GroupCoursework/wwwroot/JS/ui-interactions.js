@@ -1,17 +1,3 @@
-document.getElementById('admin-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    var loginSection = document.getElementById('login-section');
-    loginSection.style.display = loginSection.style.display === 'block' ? 'none' : 'block';
-});
-
-document.addEventListener('click', function(event) {
-    var loginSection = document.getElementById('login-section');
-    var adminLink = document.getElementById('admin-link');
-    if (loginSection.style.display === 'block' && !loginSection.contains(event.target) && !adminLink.contains(event.target)) {
-        loginSection.style.display = 'none';
-    }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     // Define the seat layout (5 rows with 6 seats each)
     const seatLayout = [
@@ -50,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const selectedSeat = this.getAttribute('data-seat');
                 document.getElementById('selected-seat').value = selectedSeat;
-                document.getElementById('submit-button').disabled = false; // Enable submit button when seat is selected
+                document.getElementById('submit-button').disabled = false; 
             });
 
             // Assign seat to left or right side
@@ -73,37 +59,3 @@ document.addEventListener('DOMContentLoaded', () => {
         seatContainer.appendChild(rowDiv);
     });
 });
-
-// Login and logout
-document.addEventListener("DOMContentLoaded", function() {
-
-    document.getElementById("admin-login-form").addEventListener("submit", function(event) {
-        event.preventDefault(); 
-
-        const adminId = document.getElementById("admin-id").value;
-        const adminPassword = document.getElementById("admin-password").value;
-
-        if (adminId === "Adminjet" && adminPassword === "AdminJet123") {
-            sessionStorage.setItem('adminLoggedIn', 'true');
-            
-            window.location.href = "HTML/admin.html";
-        } else {
-            document.getElementById("error-message").style.display = "block";
-        }
-    });
-});
-
-window.onload = function() {
-    if (window.location.pathname.includes("admin.html")) {
-        if (!sessionStorage.getItem('adminLoggedIn')) {
-            window.location.replace("../index.html");
-        }
-    }
-};
-
-function logout() {
-    sessionStorage.removeItem('adminLoggedIn');
-    localStorage.removeItem('adminLoggedIn');
-
-    window.location.replace("../index.html");
-}

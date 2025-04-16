@@ -1,0 +1,36 @@
+/*[
+    {
+        "PassportID": 1020304,
+        "FullName": "Alice Brown",
+        "PhoneNumber": "01234567890",
+        "DateOfBirth": "1985-05-15",
+        "Address": "123 Main St, Birmingham, UK",
+        "Baggage": true,
+        "CheckedIn": false,
+        "Email": "alice@gmail.com",
+        "FlightType": "Economy"
+    },
+    {
+        "PassportID": 123456,
+        "FullName": "Bob Smith",
+        "PhoneNumber": "01987654321",
+        "DateOfBirth": "1990-08-22",
+        "Address": "45 Oak Road, Finchley, UK",
+        "Baggage": false,
+        "CheckedIn": false,
+        "Email": "bob@gmail.com",
+        "FlightType": "Business"
+    },
+    {
+        "PassportID": 134524,
+        "FullName": "Charlie Johnson",
+        "PhoneNumber": "01122334455",
+        "DateOfBirth": "1978-03-10",
+        "Address": "79 Pine Road, Cardiff, UK",
+        "Baggage": true,
+        "CheckedIn": true,
+        "Email": "charlie@gmail.com",
+        "FlightType": "First Class"
+    }
+]
+*/

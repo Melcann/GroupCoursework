@@ -40,6 +40,38 @@ To access the admin page, follow these steps:
 6. Once you are done managing the data, click the **Logout** option from the navigation menu.
 
 7. After logging out, you will be redirected back to the login page.
+   
+
+## Setting Up the Database (EF Core Migrations)
+Follow these steps to set up your local SQL Server database using **Entity Framework Core** after cloning the repository:
+
+1. **Update the Connection String**:
+   - Open the `appsettings.json` file and locate the `DefaultConnection` under `ConnectionStrings`.
+   - Replace `PERSONAL-LAPTOP` with your own SQL Server instance name.
+     Example:
+     ```json
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=YOUR-SERVER-NAME\\SQLEXPRESS;Database=AirportDb;Trusted_Connection=True;TrustServerCertificate=True;"
+     }
+     ```
+
+2. **Open SQL Server Management Studio (SSMS)**:
+   - Connect to your local SQL Server instance.
+   - Ensure that the name you used in `appsettings.json` matches the one you're connected to in SSMS.
+
+3. **Apply Migrations**:
+   - Open the project in **Visual Studio**.
+   - Go to **Tools > NuGet Package Manager > Package Manager Console**.
+   - Set the **Default Project** dropdown to the project containing your `DbContext`.
+   - Run the following command:
+     ```powershell
+     Update-Database
+     ```
+   This will apply all existing migrations and create the `AirportDb` database in your SQL Server instance.
+
+4. **Verify the Database**:
+   - Go back to **SSMS** and refresh your Databases.
+   - You should now see `AirportDb` with the appropriate tables.
 
 
 ## License

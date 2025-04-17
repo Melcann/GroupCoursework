@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
 
@@ -11,12 +11,12 @@ namespace TryingSendingAnEmail.Controllers
     public class EmailController : ControllerBase
     {
         [HttpPost("send")]
-        public IActionResult SendEmail()
+        public IActionResult SendEmail(String passengerMail, String passengerName)
         {
             try
             {
                 var fromAddress = new MailAddress("jetsetgoforyou@gmail.com", "Jet Set Go");
-                var toAddress = new MailAddress("2004melissac@gmail.com", "Melissa");
+                var toAddress = new MailAddress(passengerMail, passengerName);
                 const string fromPassword = "lxcvnvouenxfkdza";
                 const string subject = "Test Email from ASP.NET Core!";
                 const string body = "Hello! This is a test email sent from an ASP.NET Core Web API.";
@@ -49,4 +49,4 @@ namespace TryingSendingAnEmail.Controllers
         }
 
     }
-}
+}*/

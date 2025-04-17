@@ -17,5 +17,10 @@ namespace GroupCoursework.Models.Entities
         public required string Email { get; set; }
         public required string FlightType { get; set; }
 
+        // Foreign Key to FlightID
+        [ForeignKey("FlightID")]
+        public int? FlightID { get; set; }
+        public Flights Flights { get; set; }
+
     }
 }

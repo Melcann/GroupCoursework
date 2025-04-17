@@ -27,6 +27,14 @@ namespace GroupCoursework.Data
                 .Property(p => p.PassportID)
                 .ValueGeneratedNever(); // Prevents auto-increment
 
+            modelBuilder.Entity<Passengers>()
+                .HasOne(f => f.Flights)
+                .WithMany()
+                .HasForeignKey(f => f.FlightID) // References to the foreign key from the flights table
+                .OnDelete(DeleteBehavior.SetNull);
+
+
+
             modelBuilder.Entity<Flights>()
                 .Property(p => p.FlightID)
                 .ValueGeneratedNever(); // Prevents auto-increment

@@ -11,6 +11,7 @@
         public Boolean CheckedIn { get; set; }
         public required string Email { get; set; }
         public required string FlightType { get; set; }
+        public required int FlightID { get; set; }
 
     }
 }

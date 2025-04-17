@@ -33,8 +33,6 @@ namespace GroupCoursework.Data
                 .HasForeignKey(f => f.FlightID) // References to the foreign key from the flights table
                 .OnDelete(DeleteBehavior.SetNull);
 
-
-
             modelBuilder.Entity<Flights>()
                 .Property(p => p.FlightID)
                 .ValueGeneratedNever(); // Prevents auto-increment

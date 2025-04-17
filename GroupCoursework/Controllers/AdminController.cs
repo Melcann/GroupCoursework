@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupCoursework.Controllers
 {
+    // Defines the AdminController as an API controller that handles requests at "api/admin"
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
 
+
+        // Constructor to initialize the database context
         public AdminController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -21,7 +24,7 @@ namespace GroupCoursework.Controllers
         [HttpPost]
         public IActionResult AddAdmin(AddAdminDto addAdminDto)
         {
-
+            // Creating a new Admin entity based on the received Dto
             var AdminEntity = new Admin()
             {
                 UserName = addAdminDto.UserName,
@@ -30,9 +33,12 @@ namespace GroupCoursework.Controllers
 
             };
 
+
+            // Adding the new admin record to the database
             dbContext.Admin.Add(AdminEntity);
             dbContext.SaveChanges();
 
+            // Returning a success response with the created admin entity
             return Ok(AdminEntity);
         }
     }

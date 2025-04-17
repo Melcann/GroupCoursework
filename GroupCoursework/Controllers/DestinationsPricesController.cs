@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupCoursework.Controllers
 {
+    // Set up the Controller
     [Route("api/[controller]")]
     [ApiController]
     public class DestinationsPricesController : ControllerBase
@@ -13,12 +14,13 @@ namespace GroupCoursework.Controllers
     {
         private readonly ApplicationDbContext dbContext;
 
+        // Constructor to inject the application's DbContext
         public DestinationsPricesController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        //Get all destinations available
+        // Get all destinations available from the database
         [HttpGet]
         public IActionResult GetAllDestinations()
         {
@@ -27,7 +29,7 @@ namespace GroupCoursework.Controllers
             return Ok(allDestinations);
         }
 
-        //Search Destinations available
+        // Search and retrieve Destinations available
         [HttpGet]
         [Route("{Destination}")]
         public IActionResult GetDestination(string Destination)
@@ -39,10 +41,10 @@ namespace GroupCoursework.Controllers
                 return NotFound();
             }
 
-            return Ok(destination);
+            return Ok(destination); // If destination is found return 200 Ok
         }
 
-        //Add destinations to database
+        // Add destinations to database
         [HttpPost]
         public IActionResult AddDestination(AddDestinationsPricesDto addDestinationsPricesDto)
         {
@@ -60,7 +62,7 @@ namespace GroupCoursework.Controllers
             return Ok(destinationsEntity);
         }
         
-        //Update destination details
+        // Update the price for an existing destination
         [HttpPut]
         [Route("{Destination}")]
         public IActionResult UpdateDestination(string Destination, UpdateDestinationsPricesDto updateDestinationsPricesDto)

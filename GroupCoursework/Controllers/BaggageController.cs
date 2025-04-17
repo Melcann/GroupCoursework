@@ -6,18 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupCoursework.Controllers
 {
+    // Set up API controller
     [Route("api/[controller]")]
     [ApiController]
     public class BaggageController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
 
+        // Constructor for injecting the database context
         public BaggageController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        //Get all Baggage.
+        //Get all Baggage. --> Retrieves all baggage records from the database
         [HttpGet]
         public IActionResult GetAllBaggage()
         {
@@ -26,21 +28,22 @@ namespace GroupCoursework.Controllers
             return Ok(allBaggage);
         }
 
-        //Search Baggage by their baggage Id.
+        //Search and retreive Baggage by their baggage Id.
         [HttpGet]
         [Route("{BaggageId:int}")]
         public IActionResult GetBaggageByBaggageId(int BaggageId)
         {
-            var baggage = dbContext.Passengers.Find(BaggageId);
+            var baggage = dbContext.Baggage.Find(BaggageId);
 
             if (baggage == null)
             {
-                return NotFound();
+                return NotFound(); // Returns 404 if not found
             }
 
             return Ok(baggage);
         }
 
+        // POST: api/baggage
         //Add baggage to database
         [HttpPost]
         public IActionResult AddBaggage(AddBaggageDto addBaggageDto)
@@ -51,7 +54,7 @@ namespace GroupCoursework.Controllers
                 return BadRequest("Passenger with given PassportID does not exist.");
             }
 
-
+            // Create new Baggage entity
             var baggageEntity = new Baggage()
             {
                 BaggageID = addBaggageDto.BaggageID,
@@ -66,7 +69,7 @@ namespace GroupCoursework.Controllers
             return Ok(baggageEntity);
         }
 
-        //Delete baggage
+        //Delete baggage record by Id
         [HttpDelete]
         [Route("{BaggageID:int}")]
         public IActionResult DeleteBaggage(int BaggageID)
@@ -80,7 +83,7 @@ namespace GroupCoursework.Controllers
 
             dbContext.Baggage.Remove(baggage);
             dbContext.SaveChanges();
-            return Ok();
+            return Ok(); // Returns 200 OK when deletion is successful
         }
 
 

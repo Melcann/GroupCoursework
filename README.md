@@ -12,7 +12,6 @@ Dana, Courtney, Zeel, Melissa and Amin
 3. Run the project using **Visual Studio** and connect to the database.
 4. Open in a browser for frontend testing.
    
-   
 ## Setting Up the Database (EF Core Migrations)
 Follow these steps to set up your local SQL Server database using **Entity Framework Core** after cloning the repository:
 
@@ -25,7 +24,6 @@ Follow these steps to set up your local SQL Server database using **Entity Frame
        "DefaultConnection": "Server=YOUR-SERVER-NAME\\SQLEXPRESS;Database=AirportDb;Trusted_Connection=True;TrustServerCertificate=True;"
      }
      ```
-
 2. **Open SQL Server Management Studio (SSMS)**:
    - Connect to your local SQL Server instance.
    - Ensure that the name you used in `appsettings.json` matches the one you're connected to in SSMS.
@@ -65,13 +63,11 @@ To access the admin page, follow these steps:
    - **Flight**  
 
 5. Click on any of these options, and the page will automatically scroll to the respective section where you can:
-   - **Add** new data
-   - **Edit** existing data
-   - **Delete** data from the database
+   - **Add** new data in the management section
+   - **Edit** existing data by clicking edit on the actions column
+   - **Delete** data from the database by clicking delete from the actions column and comfirm the alert
 
-6. Once you are done managing the data, click the **Logout** option from the navigation menu.
-
-7. After logging out, you will be redirected back to the login page.
+6. Once you are done managing the data, click the **Logout** option from the navigation menu. After logging out, you will be redirected back to the login page.
 
 ## License
 This project is for educational purposes only. All rights reserved by the development team.

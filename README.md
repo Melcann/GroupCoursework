@@ -11,37 +11,8 @@ Dana, Courtney, Zeel, Melissa and Amin
 2. Set up the database using the provided SQL scripts.
 3. Run the project using **Visual Studio** and connect to the database.
 4. Open in a browser for frontend testing.
-
-## Accessing the Admin Page
-To access the admin page, follow these steps:
-
-1. Navigate to the following URL:  
-   `https://localhost:7285/adminHTML/adminLogin.html`
-
-2. On the login page, enter the following credentials:
-   - **BranchId:** 900874
-   - **UserName:** JetsetgoStanstead
-   - **Password:** JetSetGoAdmin90@
-
-3. After successfully logging in, you will be redirected to the Admin Page:  
-   `https://localhost:7285/adminHTML/admin.html`
-
-4. On the admin page, you will see a navigation menu with options:  
-   - **Passenger**  
-   - **Plane**  
-   - **Employee**  
-   - **Flight**  
-
-5. Click on any of these options, and the page will automatically scroll to the respective section where you can:
-   - **Add** new data
-   - **Edit** existing data
-   - **Delete** data from the database
-
-6. Once you are done managing the data, click the **Logout** option from the navigation menu.
-
-7. After logging out, you will be redirected back to the login page.
    
-
+   
 ## Setting Up the Database (EF Core Migrations)
 Follow these steps to set up your local SQL Server database using **Entity Framework Core** after cloning the repository:
 
@@ -73,6 +44,34 @@ Follow these steps to set up your local SQL Server database using **Entity Frame
    - Go back to **SSMS** and refresh your Databases.
    - You should now see `AirportDb` with the appropriate tables.
 
+## Accessing the Admin Page
+To access the admin page, follow these steps:
+
+1. Navigate to the following URL:  
+   `https://localhost:7285/adminHTML/adminLogin.html`
+
+2. On the login page, enter the following credentials:
+   - **BranchId:** 900874
+   - **UserName:** JetsetgoStanstead
+   - **Password:** JetSetGoAdmin90@
+
+3. After successfully logging in, you will be redirected to the Admin Page:  
+   `https://localhost:7285/adminHTML/admin.html`
+
+4. On the admin page, you will see a navigation menu with options:  
+   - **Passenger**  
+   - **Plane**  
+   - **Employee**  
+   - **Flight**  
+
+5. Click on any of these options, and the page will automatically scroll to the respective section where you can:
+   - **Add** new data
+   - **Edit** existing data
+   - **Delete** data from the database
+
+6. Once you are done managing the data, click the **Logout** option from the navigation menu.
+
+7. After logging out, you will be redirected back to the login page.
 
 ## License
 This project is for educational purposes only. All rights reserved by the development team.

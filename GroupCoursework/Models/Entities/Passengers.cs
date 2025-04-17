@@ -21,6 +21,7 @@ namespace GroupCoursework.Models.Entities
         [ForeignKey("FlightID")]
         public int? FlightID { get; set; }
         public Flights Flights { get; set; }
+        //gsrdgh
 
     }
 }

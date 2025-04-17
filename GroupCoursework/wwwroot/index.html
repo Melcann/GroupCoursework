@@ -24,15 +24,7 @@
     </div>
 
     <div class="form-container">
-        <form id="flight-search-form">
-            <select id="flight-type" name="flight-type">
-                <option value="" disabled selected>Flight Type</option>
-                <option value="economy">Economy</option>
-                <option value="premium-economy">Premium Economy</option>
-                <option value="business">Business Class</option>
-                <option value="first-class">First Class</option>
-            </select>
-
+        <form id="flight-search-form" action="../HTML/results.html" method="GET">
             <select id="leaving-from" name="leaving-from">
                 <option value="" disabled selected>Departure Airport</option>
                 <option value="stansted">Stansted Airport</option>
@@ -147,7 +139,7 @@
         </div>
     </footer>
 
-    <script src="/JS/destinations.js"></script>
+    <script src="/JS/destinations.js" defer></script>
 </body>
 
 </html>

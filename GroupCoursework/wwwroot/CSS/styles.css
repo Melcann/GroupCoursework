@@ -562,6 +562,35 @@ footer {
         cursor: pointer;
     }
 
+#flight-type-section {
+    font-family: Arial, sans-serif;
+    border: 2px solid #005F73;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+    /* Style the heading */
+    #flight-type-section h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+/* Style the dropdown */
+#flight-type {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 #baggage {
     font-family: Arial, sans-serif;
     border: 2px solid #005F73;

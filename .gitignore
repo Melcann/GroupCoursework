@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /GroupCoursework/appsettings.json
 /GroupCoursework/Migrations
 /GroupCoursework/Models
+/GroupCoursework/appsettings.Development.json
+/GroupCoursework/appsettings.Development.json

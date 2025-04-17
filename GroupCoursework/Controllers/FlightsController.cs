@@ -17,52 +17,41 @@ namespace GroupCoursework.Controllers
             this.dbContext = dbContext;
         }
 
-        //Get all Flights.
+        // Get all Flights
         [HttpGet]
         public IActionResult GetAllFlights()
         {
             var allFlights = dbContext.Flights.ToList();
-
             return Ok(allFlights);
         }
 
-        //Search Flights by their Flight Id.
-        [HttpGet]
-        [Route("{FlightID:int}")]
+        // Search Flight by FlightID
+        [HttpGet("{FlightID:int}")]
         public IActionResult GetFlightByFlightId(int FlightID)
         {
             var flight = dbContext.Flights.Find(FlightID);
 
             if (flight == null)
-            {
                 return NotFound();
-            }
 
             return Ok(flight);
         }
 
-        //Add planes to database
+        // Add a new Flight
         [HttpPost]
-        public IActionResult AddFlight(AddFlightsDto addFlightsDto)
+        public IActionResult AddFlight([FromBody] AddFlightsDto addFlightsDto)
         {
-
-            // Validate if PlaneId exists
+            // Validate Plane exists
             var plane = dbContext.Planes.Find(addFlightsDto.PlaneId);
             if (plane == null)
-            {
                 return BadRequest("Invalid PlaneId. Plane does not exist.");
-            }
 
-            // Validate if Destination exists
+            // Validate Destination exists
             var destination = dbContext.DestinationsPrices.Find(addFlightsDto.Destination);
             if (destination == null)
-            {
-                return BadRequest("Invalid DestinationId. Destination does not exist.");
-            }
+                return BadRequest("Invalid Destination. Destination does not exist.");
 
-
-
-            var flightsEntity = new Flights()
+            var flightsEntity = new Flights
             {
                 FlightID = addFlightsDto.FlightID,
                 PlaneId = addFlightsDto.PlaneId,
@@ -73,31 +62,24 @@ namespace GroupCoursework.Controllers
                 Duration = addFlightsDto.Duration
             };
 
-  
-
             dbContext.Flights.Add(flightsEntity);
             dbContext.SaveChanges();
 
             return Ok(flightsEntity);
         }
 
-        //Update flight details
-        [HttpPut]
-        [Route("{FlightID:int}")]
-        public IActionResult UpdateFlight(int FlightID, UpdateFlightsDto updateFlightsDto)
+        // Update a Flight
+        [HttpPut("{FlightID:int}")]
+        public IActionResult UpdateFlight(int FlightID, [FromBody] UpdateFlightsDto updateFlightsDto)
         {
             var flight = dbContext.Flights.Find(FlightID);
             if (flight == null)
-            {
                 return NotFound();
-            }
 
-            // Validate if Destination exists
+            // Validate Destination exists
             var destination = dbContext.DestinationsPrices.Find(updateFlightsDto.Destination);
             if (destination == null)
-            {
                 return BadRequest("Invalid Destination. Destination does not exist.");
-            }
 
             flight.PlaneId = updateFlightsDto.PlaneId;
             flight.Destination = updateFlightsDto.Destination;
@@ -111,22 +93,18 @@ namespace GroupCoursework.Controllers
             return Ok(flight);
         }
 
-        //Delete Flight
-        [HttpDelete]
-        [Route("{FlightID:int}")]
+        // Delete a Flight
+        [HttpDelete("{FlightID:int}")]
         public IActionResult DeleteFlight(int FlightID)
         {
             var flight = dbContext.Flights.Find(FlightID);
-
             if (flight == null)
-            {
                 return NotFound();
-            }
 
             dbContext.Flights.Remove(flight);
             dbContext.SaveChanges();
+
             return Ok();
         }
-
     }
 }

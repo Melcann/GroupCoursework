@@ -21,7 +21,7 @@ namespace GroupCoursework.Controllers
         [HttpPost]
         public IActionResult AddAdmin(AddAdminDto addAdminDto)
         {
-            
+
             var AdminEntity = new Admin()
             {
                 UserName = addAdminDto.UserName,

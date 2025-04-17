@@ -18,30 +18,43 @@
         </nav>
     </header>
 
-   <!-- Flight Options -->
-<div id="flight-options">
-    <h2>Flight Options</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Duration</th>
-                <th>Price</th>
-                <th>From</th>
-                <th>To</th>
-            </tr>
-        </thead>
-        <tbody id="flight-table-body">
-            <!-- Flight options will be dynamically added here -->
-        </tbody>
-    </table>
-</div>
+    <div id="flight-options-header"></div>
 
+    <!-- Flight Options -->
+    <div id="flight-options">
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    <th>From</th>
+                    <th>To</th>
+                </tr>
+            </thead>
+            <tbody id="flight-table-body">
+                <!-- Flight options will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Flight Type Selection -->
+    <div id="flight-type-section">
+        <h2>Choose the type of class you would like to fly</h2>
+        <select id="flight-type" name="flight-type">
+            <option value="" disabled selected>Flight Type</option>
+            <option value="economy">Economy</option>
+            <option value="premium-economy">Premium Economy</option>
+            <option value="business">Business Class</option>
+            <option value="first-class">First Class</option>
+        </select>
+    </div>
+    <br />
 
     <!-- Baggage Section -->
     <div id="baggage">
         <h2>Baggage</h2>
-        <p>Included for free: 1 carry-on bag (up to 10kg).</p>
+        <p>Included for free: 1 carry-on bag (up to 15kg) and personal item</p>
 
         <p>Select one checked baggage option:</p>
         <form id="baggage-form">
@@ -127,7 +140,9 @@
         </div>
     </footer>
 
-    <script src="/JS/ui-interactions.js"></script>
+    <script src="/JS/destinations.js" defer></script>
+    <script src="/JS/bookingCreate.js"></script>
+
 
 </body>
 

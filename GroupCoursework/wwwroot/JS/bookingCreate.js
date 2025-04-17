@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
     // Define the seat layout (5 rows with 6 seats each)
     const seatLayout = [
         { row: 1, seats: ['A', 'B', 'C', 'D', 'E', 'F'] },
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const selectedSeat = this.getAttribute('data-seat');
                 document.getElementById('selected-seat').value = selectedSeat;
-                document.getElementById('submit-button').disabled = false; 
+                document.getElementById('submit-button').disabled = false;
             });
 
             // Assign seat to left or right side

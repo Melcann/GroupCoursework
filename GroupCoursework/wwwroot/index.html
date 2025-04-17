@@ -16,7 +16,7 @@
             <a href="index.html">Travel now</a>
             <a href="HTML/support.html">Legal and Support</a>
         </nav>
-    </header>      
+    </header>
 
     <div class="image-container">
         <h2 class="overlay-text">Seamless Flights, Endless Destinations</h2>
@@ -24,31 +24,18 @@
     </div>
 
     <div class="form-container">
-        <form action="search-flights.php" method="GET">
-            <select id="flight-type" name="flight-type">
-                <option value="" disabled selected>Flight Type</option>
-                <option value="economy">Economy</option>
-                <option value="premium-economy">Premium Economy</option>
-                <option value="business">Business Class</option>
-                <option value="first-class">First Class</option>
-            </select>
-
+        <form id="flight-search-form" action="../HTML/results.html" method="GET">
             <select id="leaving-from" name="leaving-from">
                 <option value="" disabled selected>Departure Airport</option>
                 <option value="stansted">Stansted Airport</option>
-                <option value="heathrow">Heathrow Airport</option>
-                <option value="gatwick">Gatwick Airport</option>
             </select>
 
             <select id="going-to" name="going-to">
-                <option value="" disabled selected>Select Destination Airport</option>
-                <option value="jfk">John F. Kennedy Airport (JFK)</option>
-                <option value="lax">Los Angeles Airport (LAX)</option>
-                <option value="dubai">Dubai International Airport (DXB)</option>
-                <option value="singapore">Singapore Changi Airport (SIN)</option>
+                <option value="" disabled selected>Destinations</option>
             </select>
 
             <input type="date" id="flight-date" name="flight-date" required>
+
             <button type="submit">Search Flights</button>
         </form>
     </div>
@@ -82,13 +69,17 @@
     <div class="testimonials">
         <h3>What Our Customers Are Saying</h3>
         <div class="testimonial-card">
-            <p>"I had an amazing experience with JetSetGo! Booking was easy, and the flight was comfortable. Highly
-                recommend!"</p>
+            <p>
+                "I had an amazing experience with JetSetGo! Booking was easy, and the flight was comfortable. Highly
+                recommend!"
+            </p>
             <p class="customer-name">- John Doe</p>
         </div>
         <div class="testimonial-card">
-            <p>"The customer support was exceptional, and the flight deals were fantastic. Will definitely use JetSetGo
-                again!"</p>
+            <p>
+                "The customer support was exceptional, and the flight deals were fantastic. Will definitely use JetSetGo
+                again!"
+            </p>
             <p class="customer-name">- Sarah Smith</p>
         </div>
         <div class="testimonial-card">
@@ -148,7 +139,7 @@
         </div>
     </footer>
 
-    <script src="JS/ui-interactions.js" defer></script>
+    <script src="/JS/destinations.js" defer></script>
 </body>
 
 </html>

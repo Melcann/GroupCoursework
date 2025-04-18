@@ -134,8 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //Adding booking schems
         const bookingData = {
-            passportId: [parseInt(passportID)],
-            flightID: [parseInt(selectedFlightId)],
+            passportId: parseInt(passportID),
+            flightID: parseInt(selectedFlightId),
             paymentStatus: true,
             seatNumber: parseInt(selectedSeat)
         };
@@ -143,62 +143,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-        //Send the data to the backend (POST request for booking)
-        const bookingPost = "https://localhost:7285/api/Bookings";
-        fetch(bookingPost, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(bookingData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                //Redirect to confirmation.html
-                console.log("Booking successful:", data);
-
-            })
-            .catch(error => {
-                console.error("Error booking flight:", error);
-                //message
-            });
-
-        //Baggage data (POST)
-        const baggageData = {
-            baggageID: Math.floor(Math.random() * 1000), //Random ID
-            passportId: parseInt(passportID),
-        };
-
-        fetch("https://localhost:7285/api/Baggage", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(baggageData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Baggage added:", data);
-            })
-            .catch(error => {
-                console.error("Error adding baggage:", error);
-            });
-
-        //passengr (POST)
+        // STEP 1: Add Passenger
         fetch("https://localhost:7285/api/Passengers", {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(passengerData),
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Passenger added:", data);
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to add passenger");
+                return response.json();
+            })
+            .then(passengerRes => {
+                console.log("✅ Passenger added:", passengerRes);
+
+                // STEP 2: Add Baggage
+                const baggageData = {
+                    baggageID: Math.floor(Math.random() * 1000),
+                    passportId: parseInt(passportID)
+                };
+
+                return fetch("https://localhost:7285/api/Baggage", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(baggageData)
+                });
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to add baggage");
+                return response.json();
+            })
+            .then(baggageRes => {
+                console.log("🎒 Baggage added:", baggageRes);
+
+                // STEP 3: Add Booking
+                return fetch("https://localhost:7285/api/Bookings", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingData)
+                });
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to create booking");
+                return response.json();
+            })
+            .then(bookingRes => {
+                console.log("🧾 Booking successful:", bookingRes);
+
+                // Get BookingId from response
+                const bookingId = bookingRes.bookingId || bookingRes.BookingId || "N/A";
+                console.log("Booking ID received:", bookingId);
+                console.log("⏳ Redirecting in 7 minutes...");
+
+                // Delayed Redirect
+                setTimeout(() => {
+                    window.location.href = `/HTML/confirmation.html?name=${encodeURIComponent(fullName)}&email=${encodeURIComponent(email)}&bookingId=${encodeURIComponent(bookingId)}`;
+                }, 420000); // 7 minutes
             })
             .catch(error => {
-                console.error("Error adding passenger:", error);
+                console.error("❌ Booking process failed:", error);
             });
-
     });
 });
+

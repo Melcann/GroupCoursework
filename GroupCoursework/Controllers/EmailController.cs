@@ -2,22 +2,28 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace TryingSendingAnEmail.Controllers
+//This code sends an email to the email taken from the database which is taken from the html.
+namespace GroupCoursework.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
+    //The references I have used: (Microsoft 2023a), (Microsoft 2023b) full reference is in the report
     public class EmailController : ControllerBase
     {
+        //A POST api
         [HttpPost("send")]
         public IActionResult SendEmail([FromQuery] string passengerMail, [FromQuery] string passengerName)
         {
-            try
+            try //Don't want code to crash in case of a failure
             {
+                //I made a gmail with the address jetsetgoforyou@gmail.com and went through the steps to get it an app password to be able to use it
                 var fromAddress = new MailAddress("jetsetgoforyou@gmail.com", "Jet Set Go");
                 var toAddress = new MailAddress(passengerMail, passengerName);
                 const string fromPassword = "lxcvnvouenxfkdza";
 
-                const string subject = "Thank you for booking with JetSetGo Stanstead!";
+                const string subject = "Thank you for booking with JetSetGo Stansted!";
+                //The following body string was modified/written by Courtney
                 string body = $@"
 Dear {passengerName},
 
@@ -52,7 +58,7 @@ Jet Set Go
                     }
                 }
 
-                return Ok("Email sent successfully!");
+                return Ok("Email sent successfully!");//This is for the developer
             }
             catch (SmtpException smtpEx)
             {

@@ -41,6 +41,12 @@ Follow these steps to set up your local SQL Server database using **Entity Frame
 4. **Verify the Database**:
    - Go back to **SSMS** and refresh your Databases.
    - You should now see `AirportDb` with the appropriate tables.
+     
+5. **If it doesn't work**:
+- Try running the following command:
+  ```bash
+  dotnet run --project 1
+  ```
 
 ## Accessing the Admin Page
 To access the admin page, follow these steps:

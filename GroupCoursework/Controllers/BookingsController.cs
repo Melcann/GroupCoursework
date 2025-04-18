@@ -51,19 +51,12 @@ namespace GroupCoursework.Controllers
         [HttpPost]
         public IActionResult AddBookings(AddBookingsDto addBookingsDto)
         {
-            /*
-            var nextVal = dbContext.Database
-            .SqlQuery<int>($"SELECT NEXT VALUE FOR BookingIdSequence")
-            .AsEnumerable()
-            .FirstOrDefault();
-
-            string bookingId = $"BK{nextVal.ToString("D4")}";
-            */
+           
 
             // Create a new booking entity using the data from the Dto
             var bookingsEntity = new Bookings()
             {
-                //BookingId = bookingId,
+                
                 PassportId = addBookingsDto.PassportId,
                 FlightID = addBookingsDto.FlightID,
                 PaymentStatus = addBookingsDto.PaymentStatus,

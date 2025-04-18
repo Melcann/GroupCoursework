@@ -88,17 +88,100 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
-
-
-//Booking information
+//booking summary
 document.addEventListener("DOMContentLoaded", function () {
     const bookingForm = document.getElementById("bookingForm");
+
+    const baggageCosts = {
+        "0": 0,
+        "23": 15
+    };
+
+    //Update the booking summary
+    const updateSummary = () => {
+        const selectedBaggage = document.querySelector('input[name="checked-baggage"]:checked')?.value || "0";
+        const selectedFlightType = document.getElementById('flight-type')?.value || "economy";
+        const selectedSeat = localStorage.getItem('selectedSeatNumber') || "No seat selected";
+
+        const baggageCost = baggageCosts[selectedBaggage] || 0;
+        const flightPrice = parseInt(localStorage.getItem('selectedFlightPrice')) || 0; 
+        const totalPrice = flightPrice + baggageCost;
+
+        //Update elemenw
+        if (document.getElementById('baggage-summary')) {
+            document.getElementById('baggage-summary').textContent = selectedBaggage === "0" ? "No checked baggage" : "23kg checked baggage (£15)";
+        }
+
+        if (document.getElementById('baggage-cost')) {
+            document.getElementById('baggage-cost').textContent = `£${baggageCost}`;
+        }
+
+        if (document.getElementById('flight-type-summary')) {
+            document.getElementById('flight-type-summary').textContent = selectedFlightType.charAt(0).toUpperCase() + selectedFlightType.slice(1);
+        }
+
+        if (document.getElementById('seat-summary')) {
+            document.getElementById('seat-summary').textContent = selectedSeat;
+        }
+
+        if (document.getElementById('flight-price')) {
+            document.getElementById('flight-price').textContent = `£${flightPrice}`;
+        }
+
+        if (document.getElementById('total-price')) {
+            document.getElementById('total-price').textContent = `£${totalPrice}`;
+        }
+    };
+
+    //Update on baggage change
+    const baggageRadioButtons = document.querySelectorAll('input[name="checked-baggage"]');
+    baggageRadioButtons.forEach((radioButton) => {
+        radioButton.addEventListener('change', function () {
+            const baggageWeight = this.value;
+            const baggageCost = baggageWeight === "23" ? 15 : 0;
+            localStorage.setItem("selectedBaggageWeight", baggageWeight);
+            localStorage.setItem("selectedBaggageCost", baggageCost);
+            updateSummary();
+        });
+    });
+
+    //Update on flight type change
+    const flightTypeSelect = document.getElementById('flight-type');
+    if (flightTypeSelect) {
+        flightTypeSelect.addEventListener('change', function () {
+            localStorage.setItem("selectedFlightType", this.value);
+            updateSummary();
+        });
+    }
+
+    //Update on seat selection
+    const seatButtons = document.querySelectorAll('.seat');
+    seatButtons.forEach((seatButton) => {
+        seatButton.addEventListener('click', function () {
+            document.querySelectorAll('.seat').forEach(seat => seat.classList.remove('selected'));
+            this.classList.add('selected');
+
+            const selectedSeat = this.getAttribute('data-seat');
+            localStorage.setItem('selectedSeatNumber', selectedSeat);
+
+            const seatMessage = document.getElementById('seat-message');
+            if (seatMessage) {
+                seatMessage.textContent = `Seat selected: ${selectedSeat}`;
+            }
+
+            updateSummary();
+        });
+    });
+
+    //Initial summary load
+    updateSummary();
+
+
 
     bookingForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        //Passenger details
+        //Passenger details from form
         const fullName = document.getElementById("full-name").value;
         const email = document.getElementById("email").value;
         const phone = document.getElementById("phone").value;
@@ -106,44 +189,26 @@ document.addEventListener("DOMContentLoaded", function () {
         const dob = document.getElementById("dob").value;
         const address = document.getElementById("address").value;
 
-        //Payment details 
-        const cardNumber = document.getElementById("card-number").value;
-        const expiryDate = document.getElementById("expiry").value;
-        const cvv = document.getElementById("cvv").value;
-
-        // Local strorage data
+        //Local storage data
         const selectedFlightId = localStorage.getItem('selectedFlightId');
-        const selectedSeat = localStorage.getItem('selectedSeatNumber');
         const selectedFlightType = localStorage.getItem('selectedFlightType');
         const selectedBaggageWeight = localStorage.getItem('selectedBaggageWeight');
-        const selectedBaggageCost = localStorage.getItem('selectedBaggageCost');
 
-        //Addin passenger schema
+        // assenger data schema
         const passengerData = {
             passportID: parseInt(passportID),
             fullName: fullName,
             phoneNumber: phone,
             dateOfBirth: dob,
             address: address,
-            baggage: selectedBaggageWeight === "23", //baggage = true if 23kg selected
-            checkedIn: false, //default no
+            baggage: selectedBaggageWeight === "23",  //true if baggage is 23kg
+            checkedIn: false,
             email: email,
             flightType: selectedFlightType,
             flightID: parseInt(selectedFlightId)
         };
 
-        //Adding booking schems
-        const bookingData = {
-            passportId: parseInt(passportID),
-            flightID: parseInt(selectedFlightId),
-            paymentStatus: true,
-            seatNumber: parseInt(selectedSeat)
-        };
-
-
-
-
-        // STEP 1: Add Passenger
+        //Add passenger data to server
         fetch("https://localhost:7285/api/Passengers", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -156,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(passengerRes => {
                 console.log("Passenger added:", passengerRes);
 
-                // STEP 2: Add Baggage
+                //Add baggage data
                 const baggageData = {
                     baggageID: Math.floor(Math.random() * 1000),
                     passportId: parseInt(passportID)
@@ -175,33 +240,25 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(baggageRes => {
                 console.log("Baggage added:", baggageRes);
 
-                // STEP 3: Add Booking
-                return fetch("https://localhost:7285/api/Bookings", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(bookingData)
+                //Send confirmation email
+                return fetch(`https://localhost:7285/Email/send?passengerMail=${encodeURIComponent(email)}&passengerName=${encodeURIComponent(fullName)}`, {
+                    method: 'POST'
                 });
             })
-            .then(response => {
-                if (!response.ok) throw new Error("Failed to create booking");
-                return response.json();
+            .then(emailRes => {
+                if (!emailRes.ok) throw new Error("Failed to send confirmation email");
+                return emailRes.text();
             })
-            .then(bookingRes => {
-                console.log("Booking successful:", bookingRes);
+            .then(emailResult => {
+                console.log("Email sent:", emailResult);
 
-                // Get BookingId from response
-                const bookingId = bookingRes.bookingId || bookingRes.BookingId || "N/A";
-                console.log("Booking ID received:", bookingId);
-                console.log("Redirecting in 7 minutes...");
-
-                // Delayed Redirect
+                //Redirect to confirmation page after a short delay
                 setTimeout(() => {
-                    window.location.href = `/HTML/confirmation.html?name=${encodeURIComponent(fullName)}&email=${encodeURIComponent(email)}&bookingId=${encodeURIComponent(bookingId)}`;
-                }, 420000); // 7 minutes
+                    window.location.href = `/HTML/confirmation.html?name=${encodeURIComponent(fullName)}&email=${encodeURIComponent(email)}&bookingId=N/A`;
+                }, 4000);
             })
             .catch(error => {
-                console.error("Booking process failed:", error);
+                console.error("Submission process failed:", error);
             });
     });
 });
-

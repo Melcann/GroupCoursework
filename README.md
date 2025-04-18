@@ -4,7 +4,7 @@
 The **Passenger Booking System** is a web-based flight booking application that allows passengers to book flights, enter personal information, make payments, and receive booking confirmations. Admin functionalities include flight assignment, passenger check-ins, and CRUD operations for planes. The system is built using **HTML, JavaScript, C#, and SQL**.
 
 ## Team 
-Dana, Courtney, Zeel, Melissa and Amin
+Dana Guzman M00869180, Courtney Bienvenue M00983356, Zeel Yagnik M00912289, Melissa Candemir M00864060, and Amin Heidari M00950078
 
 ## Install
 1. Install necessary dependencies for **C#, SQL Server, and JavaScript frameworks**.

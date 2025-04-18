@@ -47,6 +47,11 @@ Follow these steps to set up your local SQL Server database using **Entity Frame
   ```bash
   dotnet run --project 1
   ```
+6. **Run the Project with HTTPS**:
+- To run the project with HTTPS enabled, use:
+  ```bash
+  dotnet run --urls=https://localhost:7285
+  ```
 
 ## Accessing the Admin Page
 To access the admin page, follow these steps:

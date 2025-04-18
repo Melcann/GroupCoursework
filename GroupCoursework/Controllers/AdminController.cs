@@ -44,13 +44,13 @@ namespace GroupCoursework.Controllers
 
         // POST for login
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginDto loginDto)
+        public IActionResult Login([FromBody] AddLoginDto addloginDto)
         {
             // Attempt to find an admin in the database matching the provided details
             var admin = dbContext.Admin.FirstOrDefault(a =>
-                a.UserName == loginDto.UserName &&
-                a.Password == loginDto.Password &&
-                a.BranchId == loginDto.BranchId);
+                a.UserName == addloginDto.UserName &&
+                a.Password == addloginDto.Password &&
+                a.BranchId == addloginDto.BranchId);
 
             // If no matching admin is found, return an error with Invalid username or password
             if (admin == null)

@@ -24,31 +24,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-/*
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<ApplicationDbContext>();
-        var env = services.GetRequiredService<IWebHostEnvironment>();
-
-        // Seed passengers data
-        await JsonDataSeeder.SeedPassengersFromJsonAsync(context, env);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while seeding the database.");
-    }
-}
-
-*/
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
+        // Call the data seeding method to initialize the database with default data
         var context = services.GetRequiredService<ApplicationDbContext>();
         DataSeeder.SeedAll(context); 
     }
@@ -58,14 +40,6 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while seeding the database.");
     }
 }
-
-/*
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    DataSeeder.SeedAll(db); // Seed everything
-}
-*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

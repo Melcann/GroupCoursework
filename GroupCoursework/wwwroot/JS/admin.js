@@ -1,7 +1,7 @@
 ﻿//Scroll and page links
 document.querySelectorAll('.page-links a[data-target]').forEach(link => {
     link.addEventListener('click', function (e) {
-        e.preventDefault(); // stop hash
+        e.preventDefault(); //stop hash
 
         const targetId = this.getAttribute('data-target');
         const targetSection = document.getElementById(targetId);
@@ -13,51 +13,51 @@ document.querySelectorAll('.page-links a[data-target]').forEach(link => {
 });
 
 //Login form
-async function login() {
-    const branchId = document.getElementById("branchId").value;
-    const username = document.getElementById("username").value;
+function login() {
+    const branchId = document.getElementById("branchId").value.trim();
+    const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
-    const messageDiv = document.getElementById("message");
 
-    const payload = {
-        userName: username,
-        branchId: parseInt(branchId),
-        password: password
+    const validUser = {
+        branchId: "900874",
+        username: "JetSetStanstead",
+        password: "JetSetGoAdmin90@"
     };
 
-    try {
-        const response = await fetch("/api/admin/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
+    if (
+        branchId === validUser.branchId &&
+        username === validUser.username &&
+        password === validUser.password
+    ) {
+        sessionStorage.setItem("isLoggedIn", "true");
 
-        const data = await response.json();
+        showMessage("Login successful! Redirecting...", "success");
 
-        if (response.ok) {
-            // Store user data (optional: localStorage)
-            localStorage.setItem("adminUser", JSON.stringify(data));
-
-            // Redirect to admin dashboard page
-            window.location.href = "/admin.html";
-        } else {
-            messageDiv.innerText = data.message || "Login failed.";
-            messageDiv.style.color = "red";
-        }
-
-    } catch (error) {
-        console.error("Login error:", error);
-        messageDiv.innerText = "Something went wrong. Please try again.";
-        messageDiv.style.color = "red";
+        setTimeout(() => {
+            window.location.href = "admin.html";
+        }, 1000);
+    } else {
+        showMessage("Invalid Branch ID, Username, or Password.", "error");
     }
 }
 
+//Show message
+function showMessage(msg, type) {
+    const messageDiv = document.getElementById("message");
+    messageDiv.textContent = msg;
+    messageDiv.className = type;
+}
 
-
-//logout function
+//Logout function
 function logout() {
     sessionStorage.clear();
-    window.location.href = 'adminLogin.html'; // Redirect to login page
+    window.location.href = "adminLogin.html";
 }
+
+//Check login status
+function checkAuth() {
+    if (sessionStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "adminLogin.html";
+    }
+}
+

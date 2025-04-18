@@ -95,6 +95,34 @@ namespace GroupCoursework.Controllers
             return Ok(flight);
         }
 
+        // Get Flights by Destination
+        [HttpGet("by-destination/{destination}")]
+        public IActionResult GetFlightsByDestination(string destination)
+        {
+            var flights = dbContext.Flights
+                .Where(f => f.Destination.ToLower() == destination.ToLower())
+                .Select(f => new
+                {
+                    f.FlightID,
+                    f.Destination,
+                    f.DepartureTime,
+                    f.ReturnTime,
+                    f.GateNumber,
+                    f.Duration,
+                    f.PlaneId,
+                    Price = dbContext.DestinationsPrices
+                .Where(d => d.Destination.ToLower() == f.Destination.ToLower())
+                .Select(d => d.Price)
+                .FirstOrDefault()
+                })
+                .ToList();
+
+            if (!flights.Any())
+                return NotFound("No flights found for this destination.");
+
+            return Ok(flights);
+        }
+
         // Delete a Flight
         [HttpDelete("{FlightID:int}")]
         public IActionResult DeleteFlight(int FlightID)

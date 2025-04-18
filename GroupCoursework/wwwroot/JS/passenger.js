@@ -20,6 +20,7 @@
                         <td class="dob">${passenger.dateOfBirth}</td>
                         <td class="address">${passenger.address}</td>
                         <td class="flight">${passenger.flightType}</td>
+                        <td class="flight-id">${passenger.flightID}</td>
                         <td class="checked">${passenger.checkedIn ? "Yes" : "No"}</td>
                         <td class="baggage">${passenger.baggage ? "Yes" : "No"}</td>
                         <td>
@@ -35,6 +36,7 @@
                         const dob = row.querySelector(".dob");
                         const address = row.querySelector(".address");
                         const flight = row.querySelector(".flight");
+                        const flightId = row.querySelector(".flight-id");
                         const checked = row.querySelector(".checked");
                         const baggage = row.querySelector(".baggage");
 
@@ -45,6 +47,7 @@
                             dob: dob.textContent,
                             address: address.textContent,
                             flight: flight.textContent,
+                            flightId: flightId.textContent,
                             checked: checked.textContent === "Yes",
                             baggage: baggage.textContent === "Yes"
                         };
@@ -54,6 +57,7 @@
                         phone.innerHTML = `<input type="tel" value="${actualDb.phone}">`;
                         dob.innerHTML = `<input type="date" value="${actualDb.dob}">`;
                         address.innerHTML = `<input type="text" value="${actualDb.address}">`;
+                        flightId.innerHTML = `<input type="number" value="${actualDb.flightId}">`;
                         flight.innerHTML = `<input type="text" value="${actualDb.flight}">`;
                         checked.innerHTML = `
                             <select>
@@ -83,6 +87,7 @@
                                 dateOfBirth: dob.querySelector("input").value,
                                 address: address.querySelector("input").value,
                                 flightType: flight.querySelector("input").value,
+                                flightID: parseInt(flightId.querySelector("input").value),
                                 checkedIn: checked.querySelector("select").value === "true",
                                 baggage: baggage.querySelector("select").value === "true"
                             };
@@ -101,6 +106,7 @@
                                     dob.textContent = updated.dateOfBirth;
                                     address.textContent = updated.address;
                                     flight.textContent = updated.flightType;
+                                    flightId.textContent = updated.flightID;
                                     checked.textContent = updated.checkedIn ? "Yes" : "No";
                                     baggage.textContent = updated.baggage ? "Yes" : "No";
 

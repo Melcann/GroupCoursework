@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupCoursework.Controllers
 {
+    // Set up Controller
     [Route("api/[controller]")]
     [ApiController]
     public class PlanesController : ControllerBase
@@ -17,7 +18,7 @@ namespace GroupCoursework.Controllers
             this.dbContext = dbContext;
         }
 
-        //Get all Plane details.
+        //Get all Planes and their details.
         [HttpGet]
         public IActionResult GetAllPlanes()
         {

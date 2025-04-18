@@ -50,7 +50,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        DataSeeder.SeedAll(context); // Your seeding method
+        DataSeeder.SeedAll(context); 
     }
     catch (Exception ex)
     {

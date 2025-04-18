@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupCoursework.Controllers
 {
+    // Set up Controller
     [Route("api/[controller]")]
     [ApiController]
     public class PassengersController : ControllerBase
@@ -17,7 +18,7 @@ namespace GroupCoursework.Controllers
             this.dbContext = dbContext;
         }
 
-        //Get all Passengers details.
+        //Get all Passengers and their details.
         [HttpGet]
         public IActionResult GetAllPassengers()
         {
@@ -65,7 +66,7 @@ namespace GroupCoursework.Controllers
             return Ok(passengersEntity);
         }
         
-        //Update passenger details
+        // Update passenger details
         [HttpPut]
         [Route("{PassportId:int}")]
         public IActionResult UpdatePassenger(int PassportId, UpdatePassengerDto updatePassengerDto)

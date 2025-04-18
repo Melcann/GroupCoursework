@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupCoursework.Controllers
 {
+    // Set up controller
     [Route("api/[controller]")]
     [ApiController]
     public class FlightsController : ControllerBase
@@ -51,6 +52,7 @@ namespace GroupCoursework.Controllers
             if (destination == null)
                 return BadRequest("Invalid Destination. Destination does not exist.");
 
+            // Add a new Flight
             var flightsEntity = new Flights
             {
                 FlightID = addFlightsDto.FlightID,

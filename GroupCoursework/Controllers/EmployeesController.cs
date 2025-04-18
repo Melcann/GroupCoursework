@@ -7,6 +7,7 @@ using System.Data;
 
 namespace GroupCoursework.Controllers
 {
+    // Set up Controller
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
@@ -19,7 +20,7 @@ namespace GroupCoursework.Controllers
             this.dbContext = dbContext;
         }
 
-        //Get all Employees.
+        // Get all Employees.
         [HttpGet]
         public IActionResult GetAllEmployees()
         {
@@ -28,7 +29,7 @@ namespace GroupCoursework.Controllers
             return Ok(allEmployees);
         }
 
-        //Search Employees by their EmployeeId.
+        // Search Employees by their EmployeeId.
         [HttpGet]
         [Route("{EmployeeId:int}")]
         public IActionResult GetEmployeeByEmployeeId(int EmployeeId)
@@ -43,7 +44,7 @@ namespace GroupCoursework.Controllers
             return Ok(employee);
         }
 
-        //Add Employees to database
+        // Add Employees to database
         [HttpPost]
         public IActionResult AddEmployee(AddEmployeesDto addEmployeesDto)
         {
@@ -62,7 +63,7 @@ namespace GroupCoursework.Controllers
             return Ok(employeesEntity);
         }
 
-        //Update employee details
+        // Update employee details including Role and FlightId
         [HttpPut]
         [Route("{EmployeeId:int}")]
         public IActionResult UpdateEmployee(int EmployeeId, UpdateEmployeesDto updateEmployeesDto)
@@ -81,6 +82,7 @@ namespace GroupCoursework.Controllers
             return Ok(employee);
         }
 
+        // Delete Employees by using their EmployeeId
         [HttpDelete]
         [Route("{EmployeeId:int}")]
         public IActionResult DeleteEmployee(int EmployeeId)

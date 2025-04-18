@@ -1,35 +1,4 @@
-﻿// Data/JsonDataSeeder.cs
-/*
-using System.Text.Json;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using GroupCoursework.Models.Entities;
-using GroupCoursework.Data;
-
-public static class JsonDataSeeder
-{
-    public static async Task SeedPassengersFromJsonAsync(ApplicationDbContext context, IWebHostEnvironment env)
-    {
-        // Check if passengers already exist to avoid duplicate seeding
-        if (context.Passengers.Any())
-            return;
-
-        var passengersPath = Path.Combine(env.ContentRootPath, "Data/SeedData/passengers.json");
-        var passengersJson = await File.ReadAllTextAsync(passengersPath);
-        var passengers = JsonSerializer.Deserialize<List<Passengers>>(passengersJson);
-
-        await context.Passengers.AddRangeAsync(passengers);
-        await context.SaveChangesAsync();
-    }
-}
-
-*/
-
-
-using GroupCoursework.Models.Entities;
+﻿using GroupCoursework.Models.Entities;
 using GroupCoursework.Data;
 
 public static class DataSeeder
@@ -364,7 +333,7 @@ public static class DataSeeder
         context.Bookings.AddRange(
             new Bookings
             {
-                BookingId = "BK0001",
+                //BookingId = "BK0001",
                 PassportId = 102030,
                 FlightID = 342,
                 PaymentStatus = true,
@@ -372,7 +341,7 @@ public static class DataSeeder
             },
             new Bookings
             {
-                BookingId = "BK0002",
+                //BookingId = "BK0002",
                 PassportId = 123456,
                 FlightID = 423,
                 PaymentStatus = true,
@@ -380,7 +349,7 @@ public static class DataSeeder
             },
             new Bookings
             {
-                BookingId = "BK0003",
+                //BookingId = "BK0003",
                 PassportId = 134524,
                 FlightID = 652,
                 PaymentStatus = true,
@@ -388,7 +357,7 @@ public static class DataSeeder
             },
             new Bookings
             {
-                BookingId = "BK0004",
+                //BookingId = "BK0004",
                 PassportId = 198765,
                 FlightID = 342,
                 PaymentStatus = true,
@@ -396,7 +365,7 @@ public static class DataSeeder
             },
             new Bookings
             {
-                BookingId = "BK0005",
+                //BookingId = "BK0005",
                 PassportId = 176543,
                 FlightID = 423,
                 PaymentStatus = true,

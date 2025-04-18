@@ -3,6 +3,7 @@ using GroupCoursework.Models.Entities;
 using GroupCoursework.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GroupCoursework.Controllers
 {
@@ -50,10 +51,12 @@ namespace GroupCoursework.Controllers
         [HttpPost]
         public IActionResult AddBookings(AddBookingsDto addBookingsDto)
         {
+           
 
             // Create a new booking entity using the data from the Dto
             var bookingsEntity = new Bookings()
             {
+                
                 PassportId = addBookingsDto.PassportId,
                 FlightID = addBookingsDto.FlightID,
                 PaymentStatus = addBookingsDto.PaymentStatus,

@@ -31,13 +31,13 @@
             <h2>Passenger Management</h2>
             <form id="addPassengerForm">
                 <div class="form-group">
-                    <label for="passport">Passport ID:</label>
-                    <input type="text" id="passport" name="passport" required>
+                    <label for="passportID">Passport ID:</label>
+                    <input type="number" id="passportID" name="passportID" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="full-name">Full Name:</label>
-                    <input type="text" id="full-name" name="full-name" required>
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
                 </div>
 
                 <div class="form-group">
@@ -46,13 +46,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Phone Number:</label>
-                    <input type="tel" id="phone" name="phone" required>
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="dob">Date of Birth:</label>
-                    <input type="date" id="dob" name="dob" required>
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
                 </div>
 
                 <div class="form-group">
@@ -61,21 +61,34 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="baggage">Baggage (kg):</label>
-                    <input type="number" id="baggage_admin" name="baggage" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="checkedIn">Checked In:</label>
-                    <select id="checkedIn" name="checkedIn">
+                    <label for="adminBaggage">Baggage:</label>
+                    <select id="adminBaggage" name="baggage" required>
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="flight_id">Flight ID:</label>
-                    <input type="text" id="flight_id" name="flight_id" required>
+                    <label for="checkedIn">Checked In:</label>
+                    <select id="checkedIn" name="checkedIn" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="flightType">Flight Type:</label>
+                    <select id="flightType" name="flightType" required>
+                        <option value="economy">Economy</option>
+                        <option value="premium-economy">Premium Economy</option>
+                        <option value="business">Business Class</option>
+                        <option value="first-class">First Class</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="flightID">Flight ID:</label>
+                    <input type="number" id="flightID" name="flightID" required>
                 </div>
 
                 <button type="submit">Add Passenger</button>
@@ -87,23 +100,27 @@
 
             <br><br>
             <h3>Passenger List</h3>
-            <table id="passenger_list">
-                <thead>
-                    <tr>
-                        <th>Passport ID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Date of Birth</th>
-                        <th>Address</th>
-                        <th>Flight</th>
-                        <th>Checked-In</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="passengerList"></tbody>
-            </table>
+            <div class="table-container">
+                <table id="passenger_list">
+                    <thead>
+                        <tr>
+                            <th>Passport ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Date of Birth</th>
+                            <th>Address</th>
+                            <th>Flight</th>
+                            <th>Checked-In</th>
+                            <th>Baggage</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="passengerList"></tbody>
+                </table>
+            </div>
         </section>
+
 
         <!-- Plane Section -->
         <section id="plane_section">
@@ -212,13 +229,13 @@
             <h2>Flight Management</h2>
             <form id="addFlightForm">
                 <div class="form-group">
-                    <label for="flight_id">Flight ID:</label>
-                    <input type="number" id="flight_id" name="flight_id" required>
+                    <label for="flightID">Flight ID:</label>
+                    <input type="number" id="flightID" name="flightID" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="plane_id">Plane ID:</label>
-                    <input type="number" id="plane_id" name="plane_id" required>
+                    <label for="planeId">Plane ID:</label>
+                    <input type="number" id="planeId" name="planeId" required>
                 </div>
 
                 <div class="form-group">
@@ -227,23 +244,23 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="departure_time">Departure Time:</label>
-                    <input type="datetime-local" id="departure_time" name="departure_time" required>
+                    <label for="departureTime">Departure Time:</label>
+                    <input type="datetime-local" id="departureTime" name="departureTime" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="return_time">Return Time:</label>
-                    <input type="datetime-local" id="return_time" name="return_time" required>
+                    <label for="returnTime">Return Time:</label>
+                    <input type="datetime-local" id="returnTime" name="returnTime" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="gate_number">Gate Number:</label>
-                    <input type="text" id="gate_number" name="gate_number" required>
+                    <label for="gateNumber">Gate Number:</label>
+                    <input type="text" id="gateNumber" name="gateNumber" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="duration">Duration (mins):</label>
-                    <input type="number" id="duration" name="duration" required>
+                    <label for="duration">Duration (HH:MM:SS):</label>
+                    <input type="text" id="duration" name="duration" required>
                 </div>
 
                 <button type="submit">Add Flight</button>
@@ -255,21 +272,23 @@
             <br><br>
 
             <h3>Flight List</h3>
-            <table id="flight_list">
-                <thead>
-                    <tr>
-                        <th>Flight ID</th>
-                        <th>Plane ID</th>
-                        <th>Destination</th>
-                        <th>Departure</th>
-                        <th>Return</th>
-                        <th>Gate</th>
-                        <th>Duration</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="flightList"></tbody>
-            </table>
+            <div class="table-container">
+                <table id="flight_list">
+                    <thead>
+                        <tr>
+                            <th>Flight ID</th>
+                            <th>Plane ID</th>
+                            <th>Destination</th>
+                            <th>Departure</th>
+                            <th>Return</th>
+                            <th>Gate</th>
+                            <th>Duration</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flightList"></tbody>
+                </table>
+            </div>
         </section>
 
     </div>

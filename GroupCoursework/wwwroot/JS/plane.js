@@ -1,185 +1,181 @@
-﻿//Add new plane
-document.getElementById("addPlaneForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+﻿document.addEventListener("DOMContentLoaded", function () {
+    const planeTable = document.getElementById("planeList");
+    const searchPlane = document.getElementById("search-plane");
+    const planeForm = document.getElementById("addPlaneForm");
 
-    const planeId = parseInt(document.getElementById("plane_id").value);
-    const seatCapacity = parseInt(document.getElementById("seat_capacity").value);
-    const weightCapacity = parseFloat(document.getElementById("weight_capacity").value);
-    const availabilityValue = document.getElementById("availability").value;
-    const availability = availabilityValue === "Available";
-
-    const planeData = {
-        planeId,
-        seatCapacity,
-        weightCapacity,
-        availability
-    };
-
-    try {
-        const response = await fetch('https://localhost:7285/api/Planes', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(planeData)
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            alert("Plane added successfully!");
-            addPlaneToTable(result);
-            document.getElementById("addPlaneForm").reset();
-        } else {
-            const err = await response.text();
-            console.error("Failed to add plane:", err);
-            alert("Failed to add plane.");
-        }
-    } catch (error) {
-        console.error("Error occurred while adding the plane:", error);
-        alert("Error occurred while adding the plane.");
-    }
-});
-
-
-//Load planes 
-window.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const response = await fetch('https://localhost:7285/api/Planes');
+    //Load planes
+    function displayPlanes() {
         console.log("Page load and fetching all planes...");
-        if (response.ok) {
-            const planes = await response.json();
-            console.log("Planes fetched", planes);
-            planes.forEach(addPlaneToTable);
-        } else {
-            alert("Failed to load planes.");
-        }
-    } catch (error) {
-        console.error("Error loading planes:", error);
+        fetch("https://localhost:7285/api/Planes")
+            .then(response => response.json())
+            .then(data => {
+                console.log("Planes fetched:", data);
+                renderPlanes(data);
+            })
+            .catch(error => console.error("Error fetching planes:", error));
     }
-});
 
+    //Planes table
+    function renderPlanes(planes) {
+        planeTable.innerHTML = "";
+        planes.forEach(plane => {
+            const row = document.createElement("tr");
+            row.setAttribute("data-plane-id", plane.planeId);
 
-//Add plane row
-function addPlaneToTable(plane) {
-    const row = document.createElement("tr");
-    row.setAttribute("data-plane-id", plane.planeId);
+            row.innerHTML = `
+                <td class="plane-id">${plane.planeId}</td>
+                <td class="plane-seat">${plane.seatCapacity}</td>
+                <td class="plane-weight">${plane.weightCapacity}</td>
+                <td class="plane-availability">${plane.availability ? "Available" : "Not Available"}</td>
+                <td>
+                    <button class="edit-btn">Edit</button>
+                    <button onclick="deletePlane(${plane.planeId})">Delete</button>
+                </td>
+            `;
 
-    const readableAvailability = plane.availability ? "Available" : "Not Available";
+            //Crud save,edit cancel
+            row.querySelector(".edit-btn").addEventListener("click", function () {
+                const seatCell = row.querySelector(".plane-seat");
+                const weightCell = row.querySelector(".plane-weight");
+                const availCell = row.querySelector(".plane-availability");
 
-    row.innerHTML = `
-        <td>${plane.planeId}</td>
-        <td contenteditable="true" data-field="seatCapacity">${plane.seatCapacity}</td>
-        <td contenteditable="true" data-field="weightCapacity">${plane.weightCapacity}</td>
-        <td contenteditable="true" data-field="availability">${readableAvailability}</td>
-        <td>
-            <button onclick="editPlane(${plane.planeId})">Edit</button>
-            <button onclick="deletePlane(${plane.planeId})">Delete</button>
-        </td>
-    `;
-    document.getElementById("planeList").appendChild(row);
-    enableInlineEditing(row, plane.planeId);
-}
+                const originalSeat = seatCell.textContent;
+                const originalWeight = weightCell.textContent;
+                const originalAvail = availCell.textContent;
 
+                seatCell.innerHTML = `<input type="number" value="${originalSeat}">`;
+                weightCell.innerHTML = `<input type="number" step="0.01" value="${originalWeight}">`;
+                availCell.innerHTML = `
+                    <select>
+                        <option value="true" ${originalAvail === "Available" ? "selected" : ""}>Available</option>
+                        <option value="false" ${originalAvail === "Not Available" ? "selected" : ""}>Not Available</option>
+                    </select>
+                `;
 
-//Inline editing
-function enableInlineEditing(row, planeId) {
-    row.querySelectorAll('[contenteditable]').forEach(cell => {
-        cell.addEventListener('blur', () => handleInlineEdit(cell, planeId));
-        cell.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                cell.blur(); // Save when enter
-            }
+                const actionCell = row.lastElementChild;
+                actionCell.innerHTML = `
+                    <button class="save-btn">Save</button>
+                    <button class="cancel-btn">Cancel</button>
+                `;
+
+                //Save
+                actionCell.querySelector(".save-btn").addEventListener("click", function () {
+                    const updatedPlane = {
+                        planeId: plane.planeId,
+                        seatCapacity: parseInt(seatCell.querySelector("input").value),
+                        weightCapacity: parseFloat(weightCell.querySelector("input").value),
+                        availability: availCell.querySelector("select").value === "true"
+                    };
+
+                    fetch(`https://localhost:7285/api/Planes/${plane.planeId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(updatedPlane)
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                displayPlanes();
+                            } else {
+                                console.error("Update failed");
+                            }
+                        })
+                        .catch(error => console.error("Error updating plane:", error));
+                });
+
+                //Cancel
+                actionCell.querySelector(".cancel-btn").addEventListener("click", function () {
+                    seatCell.textContent = originalSeat;
+                    weightCell.textContent = originalWeight;
+                    availCell.textContent = originalAvail;
+
+                    actionCell.innerHTML = `
+                        <button class="edit-btn">Edit</button>
+                        <button onclick="deletePlane(${plane.planeId})">Delete</button>
+                    `;
+                    row.querySelector(".edit-btn").addEventListener("click", arguments.callee); // Re-bind edit
+                });
+            });
+
+            planeTable.appendChild(row);
         });
-    });
-}
+    }
 
+    //Add new plane
+    planeForm.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-//Convert string availability to boolean match database
-function parseAvailability(text) {
-    return text.toLowerCase() === "available";
-}
-
-
-//Edits on the table
-async function handleInlineEdit(cell, planeId) {
-    const row = cell.closest('tr');
-    const seatCapacity = parseInt(row.querySelector('[data-field="seatCapacity"]').textContent.trim());
-    const weightCapacity = parseFloat(row.querySelector('[data-field="weightCapacity"]').textContent.trim());
-    const availabilityText = row.querySelector('[data-field="availability"]').textContent.trim();
-    const availability = parseAvailability(availabilityText);
-
-    try {
-        const updateData = {
-            seatCapacity,
-            weightCapacity,
-            availability
+        const newPlane = {
+            planeId: parseInt(document.getElementById("plane_id").value),
+            seatCapacity: parseInt(document.getElementById("seat_capacity").value),
+            weightCapacity: parseFloat(document.getElementById("weight_capacity").value),
+            availability: document.getElementById("availability").value === "Available"
         };
 
-        const response = await fetch(`https://localhost:7285/api/Planes/${planeId}`, {
-            method: 'PUT',
+        fetch("https://localhost:7285/api/Planes", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(updateData)
-        });
+            body: JSON.stringify(newPlane)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to add plane");
+                return response.json();
+            })
+            .then(data => {
+                console.log("Plane added:", data);
+                displayPlanes();
+                planeForm.reset();
+            })
+            .catch(error => console.error("Error adding plane:", error));
+    });
 
-        if (response.ok) {
-            console.log(`Plane ${planeId} updated successfully.`);
-            row.querySelector('[data-field="availability"]').textContent = availability ? "Available" : "Not Available";
+    //Delete plane
+    window.deletePlane = function (planeId) {
+        if (!confirm("Are you sure you want to delete this plane?")) return;
+
+        fetch(`https://localhost:7285/api/Planes/${planeId}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (response.ok) {
+                    displayPlanes();
+                } else {
+                    console.error("Failed to delete plane.");
+                }
+            })
+            .catch(error => console.error("Error deleting plane:", error));
+    };
+
+    //Search plane by ID
+    searchPlane.addEventListener("input", function () {
+        const query = this.value.trim().toLowerCase(); //case insensitive 
+        console.log("Searching for plane with ID:", query);
+
+        const rows = document.querySelectorAll("#planeList tr");
+
+        if (query === "") {
+            //Query is empty, show all rows
+            rows.forEach(row => row.style.display = "");
         } else {
-            const err = await response.text();
-            alert("Update failed: " + err);
-        }
-    } catch (error) {
-        console.error("Error updating plane:", error);
-        alert("Error updating plane.");
-    }
-}
+            rows.forEach(row => {
+                const planeId = row.cells[0].textContent.trim().toLowerCase(); // Get the plane ID and make it lowercase for comparison
 
-
-//Delete a plane
-async function deletePlane(planeId) {
-    if (!confirm("Are you sure you want to delete this plane?")) return;
-
-    try {
-        const response = await fetch(`https://localhost:7285/api/Planes/${planeId}`, {
-            method: 'DELETE'
-        });
-
-        if (response.ok) {
-            alert("Plane deleted successfully.");
-            document.querySelector(`tr[data-plane-id="${planeId}"]`).remove();
-        } else {
-            alert("Failed to delete plane.");
-        }
-    } catch (error) {
-        console.error("Error deleting plane:", error);
-    }
-}
-
-
-//Focus first editable cell on edit
-function editPlane(planeId) {
-    const row = document.querySelector(`tr[data-plane-id="${planeId}"]`);
-    const firstEditable = row.querySelector('[contenteditable]');
-    if (firstEditable) {
-        firstEditable.focus();
-    }
-}
-
-
-//Search by Plane ID
-document.getElementById("search-plane").addEventListener("input", function () {
-    const query = this.value.trim().toLowerCase();
-    const rows = document.querySelectorAll("#planeList tr");
-
-    rows.forEach(row => {
-        const planeId = row.cells[0].textContent.toLowerCase();
-        if (planeId.includes(query)) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
+                //Plane ID matche query to show the row
+                if (planeId.includes(query)) {
+                    console.log(`Plane with ID ${planeId} matches the search query.`);
+                    row.style.display = "";
+                } else {
+                    console.log(`Plane with ID ${planeId} does not match the search query.`);
+                    row.style.display = "none";
+                }
+            });
         }
     });
+
+
+    displayPlanes();
 });
+

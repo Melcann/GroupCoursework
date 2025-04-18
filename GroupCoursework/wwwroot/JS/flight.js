@@ -1,175 +1,188 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
-    const addFlightForm = document.getElementById("addFlightForm");
-    const flightTableBody = document.getElementById("flightList");
-    const searchFlightInput = document.getElementById("search-flight");
+﻿document.addEventListener('DOMContentLoaded', function () {
+    const flightForm = document.getElementById('addFlightForm');
+    const flightTable = document.getElementById('flightList');
+    const searchFlight = document.getElementById('search-flight');
 
-
-
-    //Initial fetch and display
-    fetchFlights();
-
-
-
-    //Fetch and display all flights
-    async function fetchFlights() {
-        try {
-            const res = await fetch("https://localhost:7285/api/Flights");
-            console.log("Page load and fetching all flights...");
-            const data = await res.json();
-            console.log("Flights fetched", data);
-            flightTableBody.innerHTML = "";
-            data.forEach(flight => flightTableBody.appendChild(createFlightRow(flight)));
-        } catch (err) {
-            console.error("Fetch error:", err);
-        }
+    //Loaflights
+    function displayFlights() {
+        fetch('https://localhost:7285/api/Flights')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Flights fetched:", data);
+                renderFlights(data);
+            })
+            .catch(error => console.error("Error fetching flights:", error));
     }
 
+    function renderFlights(data) {
+        flightTable.innerHTML = "";
+        data.forEach(flight => {
+            const row = document.createElement('tr');
 
-    //Create inline editable cells
-    function createFlightRow(flight) {
-        const row = document.createElement("tr");
-        row.setAttribute("data-flight-id", flight.flightID);
+            row.innerHTML = `
+                <td class="flight-id">${flight.flightID}</td>
+                <td class="plane-id">${flight.planeId}</td>
+                <td class="destination">${flight.destination}</td>
+                <td class="departure">${new Date(flight.departureTime).toLocaleString()}</td>
+                <td class="return">${new Date(flight.returnTime).toLocaleString()}</td>
+                <td class="gate">${flight.gateNumber}</td>
+                <td class="duration">${flight.duration}</td>
+                <td>
+                    <button class="edit-btn">Edit</button>
+                    <button onclick="deleteFlight('${flight.flightID}')">Delete</button>
+                </td>
+            `;
 
-        row.innerHTML = `
-    <td contenteditable="true" class="editable">${flight.flightID}</td>
-    <td contenteditable="true" class="editable">${flight.planeId}</td>
-    <td contenteditable="true" class="editable">${flight.destination}</td>
-    <td contenteditable="true" class="editable">${new Date(flight.departureTime).toISOString().slice(0, 16)}</td>
-    <td contenteditable="true" class="editable">${new Date(flight.returnTime).toISOString().slice(0, 16)}</td>
-    <td contenteditable="true" class="editable">${flight.gateNumber}</td>
-    <td contenteditable="true" class="editable">${flight.duration}</td>
-    <td>
-        <button class="save-btn">Save</button>
-        <button onclick="deleteFlight(${flight.flightID})">Delete</button>
-    </td>
-    `;
+            row.querySelector(".edit-btn").addEventListener("click", function () {
+                const planeCell = row.querySelector(".plane-id");
+                const destCell = row.querySelector(".destination");
+                const depCell = row.querySelector(".departure");
+                const retCell = row.querySelector(".return");
+                const gateCell = row.querySelector(".gate");
+                const durationCell = row.querySelector(".duration");
 
-        row.querySelector(".save-btn").addEventListener("click", () => saveEditedFlight(row, flight.flightID));
-        return row;
-    }
+                const original = {
+                    planeId: planeCell.textContent,
+                    destination: destCell.textContent,
+                    departureTime: new Date(depCell.textContent).toISOString().slice(0, 16),
+                    returnTime: new Date(retCell.textContent).toISOString().slice(0, 16),
+                    gateNumber: gateCell.textContent,
+                    duration: durationCell.textContent
+                };
 
+                planeCell.innerHTML = `<input type="text" value="${original.planeId}">`;
+                destCell.innerHTML = `<input type="text" value="${original.destination}">`;
+                depCell.innerHTML = `<input type="datetime-local" value="${original.departureTime}">`;
+                retCell.innerHTML = `<input type="datetime-local" value="${original.returnTime}">`;
+                gateCell.innerHTML = `<input type="text" value="${original.gateNumber}">`;
+                durationCell.innerHTML = `<input type="text" value="${original.duration}">`;
 
-    //Save updated flight from table row
-    async function saveEditedFlight(row, flightID) {
-        const cells = row.querySelectorAll("td");
+                const actionCell = row.lastElementChild;
+                actionCell.innerHTML = `
+                    <button class="save-btn">Save</button>
+                    <button class="cancel-btn">Cancel</button>
+                `;
 
-        const updatedFlight = {
-            flightID: parseInt(cells[0].innerText),
-            planeId: parseInt(cells[1].innerText),
-            destination: cells[2].innerText.trim(),
-            departureTime: new Date(cells[3].innerText).toISOString(),
-            returnTime: new Date(cells[4].innerText).toISOString(),
-            gateNumber: cells[5].innerText.trim(),
-            duration: formatDuration(cells[6].innerText.trim())
-        };
+                //Save update
+                actionCell.querySelector(".save-btn").addEventListener("click", function () {
+                    const updatedFlight = {
+                        flightID: flight.flightID,
+                        planeId: planeCell.querySelector("input").value,
+                        destination: destCell.querySelector("input").value,
+                        departureTime: depCell.querySelector("input").value,
+                        returnTime: retCell.querySelector("input").value,
+                        gateNumber: gateCell.querySelector("input").value,
+                        duration: durationCell.querySelector("input").value
+                    };
 
-        try {
-            const res = await fetch(`https://localhost:7285/api/Flights/${flightID}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updatedFlight)
+                    fetch(`https://localhost:7285/api/Flights/${flight.flightID}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(updatedFlight)
+                    })
+                        .then(res => {
+                            if (res.ok) {
+                                displayFlights();
+                            } else {
+                                throw new Error("Update failed");
+                            }
+                        })
+                        .catch(error => console.error("Error updating flight:", error));
+                });
+
+                //Cancel edit
+                actionCell.querySelector(".cancel-btn").addEventListener("click", function () {
+                    planeCell.textContent = original.planeId;
+                    destCell.textContent = original.destination;
+                    depCell.textContent = new Date(original.departureTime).toLocaleString();
+                    retCell.textContent = new Date(original.returnTime).toLocaleString();
+                    gateCell.textContent = original.gateNumber;
+                    durationCell.textContent = original.duration;
+
+                    actionCell.innerHTML = `
+                        <button class="edit-btn">Edit</button>
+                        <button onclick="deleteFlight('${flight.flightID}')">Delete</button>
+                    `;
+                    row.querySelector(".edit-btn").addEventListener("click", arguments.callee);
+                });
             });
 
-            if (!res.ok) throw new Error("Update failed");
-            alert("Flight updated successfully.");
-        } catch (err) {
-            console.error("Update error:", err);
-            alert("Failed to update flight.");
-        }
+            flightTable.appendChild(row);
+        });
     }
 
-
-    //Add flight from form
-    addFlightForm.addEventListener("submit", async (e) => {
+    //Add light
+    flightForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const newFlight = {
-            flightID: parseInt(document.getElementById("flight_id").value),
-            planeId: parseInt(document.getElementById("plane_id").value),
-            destination: document.getElementById("destination").value.trim(),
-            departureTime: document.getElementById("departure_time").value,
-            returnTime: document.getElementById("return_time").value,
-            gateNumber: document.getElementById("gate_number").value.trim(),
-            duration: formatDuration(document.getElementById("duration").value.trim())
+            flightID: document.getElementById('flightID').value,
+            planeId: document.getElementById('planeId').value,
+            destination: document.getElementById('destination').value,
+            departureTime: document.getElementById('departureTime').value,
+            returnTime: document.getElementById('returnTime').value,
+            gateNumber: document.getElementById('gateNumber').value,
+            duration: document.getElementById('duration').value
         };
 
-        try {
-            const res = await fetch("https://localhost:7285/api/Flights", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(newFlight)
-            });
-
-            if (!res.ok) throw new Error("Add failed");
-
-            const flight = await res.json();
-            alert("Flight added successfully.");
-            flightTableBody.appendChild(createFlightRow(flight));
-            addFlightForm.reset();
-        } catch (err) {
-            console.error("Add error:", err);
-            alert("Failed to add flight.");
-        }
+        fetch('https://localhost:7285/api/Flights', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newFlight)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to add flight");
+                return response.json();
+            })
+            .then(data => {
+                console.log("Flight added:", data);
+                displayFlights();
+                flightForm.reset();
+            })
+            .catch(error => console.error("Error adding flight:", error));
     });
 
-
-    //Delete flight
-    window.deleteFlight = async function (id) {
+    //Delete
+    window.deleteFlight = function (flightID) {
         if (!confirm("Are you sure you want to delete this flight?")) return;
 
-        try {
-            const res = await fetch(`https://localhost:7285/api/Flights/${id}`, {
-                method: "DELETE"
-            });
-
-            if (!res.ok) throw new Error("Delete failed");
-
-            alert("Flight deleted successfully.");
-            fetchFlights();
-        } catch (err) {
-            console.error("Delete error:", err);
-            alert("Failed to delete flight.");
-        }
+        fetch(`https://localhost:7285/api/Flights/${flightID}`, {
+            method: 'DELETE'
+        })
+            .then(res => {
+                if (res.ok) {
+                    displayFlights();
+                } else {
+                    throw new Error("Failed to delete flight");
+                }
+            })
+            .catch(error => console.error("Error deleting flight:", error));
     };
 
+    //Search flight ID and filter to allow partal search
+    searchFlight.addEventListener("input", function () {
+        const query = this.value.trim().toLowerCase();
+        console.log("Searching for flight with ID:", query);
 
-    //Search flight by ID
-    searchFlightInput.addEventListener("input", async () => {
-        const id = searchFlightInput.value.trim();
+        const rows = document.querySelectorAll("#flightList tr");
 
-        if (!id) {
-            fetchFlights();
-            return;
-        }
-
-        try {
-            const res = await fetch(`https://localhost:7285/api/Flights/${id}`);
-            if (!res.ok) throw new Error("Not found");
-
-            const flight = await res.json();
-            flightTableBody.innerHTML = "";
-            flightTableBody.appendChild(createFlightRow(flight));
-        } catch {
-            flightTableBody.innerHTML = `<tr><td colspan="8">No flight found with ID "${id}"</td></tr>`;
+        if (query === "") {
+            rows.forEach(row => row.style.display = "");
+        } else {
+            rows.forEach(row => {
+                const flightId = row.cells[0].textContent.trim().toLowerCase(); //Flight ID 
+                if (flightId.includes(query)) {
+                    console.log(`Flight with ID ${flightId} matches the search query.`);
+                    row.style.display = "";
+                } else {
+                    console.log(`Flight with ID ${flightId} does not match the search query.`);
+                    row.style.display = "none";
+                }
+            });
         }
     });
 
 
 
-    //Helper to format duration like this "2.5" => "2h 30m", "3" => "3h"
-    function formatDuration(value) {
-        if (!value) return "0h";
-
-        //If already in "Xh Ym" format, return same
-        if (/^\d+h(\s?\d+m)?$/.test(value)) return value;
-
-        const num = parseFloat(value);
-        if (isNaN(num)) return value;
-
-        const hours = Math.floor(num);
-        const minutes = Math.round((num - hours) * 60);
-
-        return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
-    }
+    displayFlights();
 });
-

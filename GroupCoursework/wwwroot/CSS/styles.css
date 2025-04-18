@@ -888,6 +888,28 @@ footer {
     color: white;
 }
 
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+#flight_list,
+#passenger_list {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+}
+
+    #flight_list th,
+    #flight_list td,
+    #passenger_list th,
+    #passenger_list td {
+        padding: 8px 12px;
+        text-align: left;
+        border: 1px solid #ccc;
+        white-space: nowrap;
+    }
+
 body.admin-page {
     background: linear-gradient(337deg, #02292b 8%, #0ED8DB 54%, #C9FEFF 98%);
     background-size: 300% 300%;

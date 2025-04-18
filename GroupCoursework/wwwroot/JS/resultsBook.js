@@ -143,9 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-
         //Send the data to the backend (POST request for booking)
         const bookingPost = "https://localhost:7285/api/Bookings";
         fetch(bookingPost, {

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/CSS/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>confirmation</title>
+</head>
+
+<body>
+    <header class="header-container">
+        <h1 class="logo">JetSetGo</h1>
+        <nav class="page-links">
+            <a href="index.html">Travel now</a>
+            <a href="HTML/support.html">Legal and Support</a>
+        </nav>
+    </header>
+
+    <div class="confirmation-container">
+        <h1>Thank you for booking with JetSetGo! ✈️</h1>
+        <p><strong>Name:</strong> <span id="conf-name"></span></p>
+        <p><strong>Email:</strong> <span id="conf-email"></span></p>
+        <p><strong>Booking ID:</strong> <span id="conf-booking-id"></span></p>
+
+        <button id="confirm-button">Confirm booking!</button>
+    </div>
+
+    <script>
+        // Details parse
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name');
+        const email = params.get('email');
+        const bookingId = params.get('bookingId');
+
+        document.getElementById('conf-name').textContent = name;
+        document.getElementById('conf-email').textContent = email;
+        document.getElementById('conf-booking-id').textContent = bookingId;
+
+        document.getElementById('confirm-button').addEventListener('click', () => {
+            window.location.href = "../index.html";
+        });
+    </script>
+
+
+    <footer>
+        <h3>JetSetGo Bookings</h3>
+        <p>&copy; 2025 Airport Management System. All Rights Reserved.</p>
+
+        <div>
+            <h4>Customer Support</h4>
+            <p>Email: <a href="mailto:Skyport.support@airport.com">Skyport.support@airport.com</a></p>
+            <p>Phone: <a href="tel:+44238900800">+44 238 900 800</a></p>
+        </div>
+
+        <div>
+            <h4>Legal</h4>
+            <a href="HTML/support.html">Terms of Service</a> |
+            <a href="HTML/support.html">Privacy Policy</a>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -726,25 +726,25 @@ footer {
     margin-left: 10px;
 }
 
-#submit-button {
-    padding: 12px 20px;
-    background-color: #0a9396;
-    color: white;
-    border-radius: 50px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-    margin-top: 20px;
+#submit-button,#confirm-button {
+padding: 12px 20px;
+background-color: #0a9396;
+color: white;
+border-radius: 50px;
+border: none;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+margin-top: 20px;
 }
 
-    #submit-button:disabled {
-        background-color: #ccc;
+    #submit-button:disabled, #confirm-button:disabled{
+    background-color: #ccc;
     }
 
-    #submit-button:hover:not(:disabled) {
-        background-color: #0ed8db;
-        transform: scale(1.1);
+    #submit-button:hover:not(:disabled), #confirm-button:hover:not(:disabled) {
+    background-color: #0ed8db;
+    transform: scale(1.1);
     }
 
 #bookingForm {

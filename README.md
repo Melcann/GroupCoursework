@@ -17,7 +17,7 @@ Follow these steps to set up your local SQL Server database using **Entity Frame
 
 1. **Update the Connection String**:
    - Open the `appsettings.json` file and locate the `DefaultConnection` under `ConnectionStrings`.
-   - Replace `PERSONAL-LAPTOP` with your own SQL Server instance name.
+   - Replace `YOUR-SERVER-NAME` with your own SQL Server instance name.
      Example:
      ```json
      "ConnectionStrings": {

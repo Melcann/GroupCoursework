@@ -33,7 +33,7 @@ Feel free to contact our support team at support@jetsetgo.com or call us at (800
 We look forward to providing you with a smooth and comfortable journey. Please arrive at the airport at least 2 hours before your scheduled departure.
 
 Bon voyage!  
-Jet Set Go ✈️
+Jet Set Go
 ";
 
                 using (var smtp = new SmtpClient("smtp.gmail.com", 587))

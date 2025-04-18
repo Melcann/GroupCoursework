@@ -19,29 +19,13 @@
     </header>
 
     <div class="confirmation-container">
-        <h1>Thank you for booking with JetSetGo! ✈️</h1>
+        <h1>Thank you for booking with JetSetGo!</h1>
         <p><strong>Name:</strong> <span id="conf-name"></span></p>
         <p><strong>Email:</strong> <span id="conf-email"></span></p>
-        <p><strong>Booking ID:</strong> <span id="conf-booking-id"></span></p>
-
+        <p><strong>BookingID:</strong> <span id="conf-booking-id"></span></p>
+     
         <button id="confirm-button">Confirm booking!</button>
     </div>
-
-    <script>
-        // Details parse
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('name');
-        const email = params.get('email');
-        const bookingId = params.get('bookingId');
-
-        document.getElementById('conf-name').textContent = name;
-        document.getElementById('conf-email').textContent = email;
-        document.getElementById('conf-booking-id').textContent = bookingId;
-
-        document.getElementById('confirm-button').addEventListener('click', () => {
-            window.location.href = "../index.html";
-        });
-    </script>
 
 
     <footer>
@@ -60,6 +44,7 @@
             <a href="HTML/support.html">Privacy Policy</a>
         </div>
     </footer>
+    <script src="/JS/confirmation.js"></script>
 </body>
 
 </html>

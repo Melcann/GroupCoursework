@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(passengerRes => {
-                console.log("✅ Passenger added:", passengerRes);
+                console.log("Passenger added:", passengerRes);
 
                 // STEP 2: Add Baggage
                 const baggageData = {
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(baggageRes => {
-                console.log("🎒 Baggage added:", baggageRes);
+                console.log("Baggage added:", baggageRes);
 
                 // STEP 3: Add Booking
                 return fetch("https://localhost:7285/api/Bookings", {
@@ -187,12 +187,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(bookingRes => {
-                console.log("🧾 Booking successful:", bookingRes);
+                console.log("Booking successful:", bookingRes);
 
                 // Get BookingId from response
                 const bookingId = bookingRes.bookingId || bookingRes.BookingId || "N/A";
                 console.log("Booking ID received:", bookingId);
-                console.log("⏳ Redirecting in 7 minutes...");
+                console.log("Redirecting in 7 minutes...");
 
                 // Delayed Redirect
                 setTimeout(() => {
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 420000); // 7 minutes
             })
             .catch(error => {
-                console.error("❌ Booking process failed:", error);
+                console.error("Booking process failed:", error);
             });
     });
 });

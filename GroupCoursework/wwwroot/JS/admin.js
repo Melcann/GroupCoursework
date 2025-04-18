@@ -12,52 +12,49 @@ document.querySelectorAll('.page-links a[data-target]').forEach(link => {
     });
 });
 
-//Login form
+// Login form
 function login() {
-    const branchId = document.getElementById("branchId").value.trim();
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
+    const branchId = document.getElementById('branchId').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    const validUser = {
-        branchId: "900874",
-        username: "JetSetStanstead",
-        password: "JetSetGoAdmin90@"
+    const loginData = {
+        BranchId: branchId,
+        UserName: username,
+        Password: password
     };
 
-    if (
-        branchId === validUser.branchId &&
-        username === validUser.username &&
-        password === validUser.password
-    ) {
-        sessionStorage.setItem("isLoggedIn", "true");
+    document.getElementById('message').innerText = 'Logging in...';
 
-        showMessage("Login successful! Redirecting...", "success");
-
-        setTimeout(() => {
-            window.location.href = "admin.html";
-        }, 1000);
-    } else {
-        showMessage("Invalid Branch ID, Username, or Password.", "error");
-    }
+    fetch('https://localhost:7285/api/admin/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.message) {
+                sessionStorage.setItem('username', data.adminId);
+                document.getElementById('message').innerText = `Login successful. Welcome, ${data.adminId}!`;
+                setTimeout(() => {
+                    window.location.href = 'admin.html'; 
+                }, 4000);
+            }
+        })
+        .catch(error => {
+            document.getElementById('message').innerText = error.message;
+        });
 }
 
-//Show message
-function showMessage(msg, type) {
-    const messageDiv = document.getElementById("message");
-    messageDiv.textContent = msg;
-    messageDiv.className = type;
-}
-
-//Logout function
+// Logout function
 function logout() {
     sessionStorage.clear();
-    window.location.href = "adminLogin.html";
+    window.location.href = 'adminLogin.html';
 }
-
-//Check login status
-function checkAuth() {
-    if (sessionStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "adminLogin.html";
-    }
-}
-

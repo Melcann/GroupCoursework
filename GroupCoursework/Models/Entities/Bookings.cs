@@ -17,7 +17,7 @@ namespace GroupCoursework.Models.Entities
         public required int PassportId { get; set; }
         public Passengers Passengers { get; set; }
 
-        // Foreign Key to Destination
+        // Foreign Key to FlightId
         [ForeignKey("Flights")]
         public required int FlightID { get; set; }
         public Flights Flights { get; set; }
